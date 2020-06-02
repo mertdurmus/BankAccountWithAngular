@@ -4,10 +4,11 @@ import { User } from 'src/models/user';
 import { LoginUser } from 'src/models/loginUser';
 import { AlertifyService } from './Alertify.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 export const AUTHENTICATED_USER = 'authenticatedUser';
-
+export const AUTHENTICATED_USER_ID = 'authenticatedUserId';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
   user1: User;
 
   constructor(private alertifyService: AlertifyService,
-    private router: Router, ) {
+              private router: Router, ) {
     this.createDatabase();
   }
 
@@ -63,7 +64,17 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem(AUTHENTICATED_USER);
+    localStorage.removeItem(AUTHENTICATED_USER_ID);
     this.alertifyService.error('Sistemden çıkış yapıldı');
+  }
+
+
+  async setCurrentUserId() {
+    const user = localStorage.getItem(AUTHENTICATED_USER);
+    console.log(user);
+    const userDb = await this.db.users.where('userName').equals(user).toArray();
+    localStorage.setItem(AUTHENTICATED_USER_ID, userDb[0].id);
+
   }
 
 

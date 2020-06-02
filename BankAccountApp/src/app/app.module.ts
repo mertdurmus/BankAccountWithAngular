@@ -11,6 +11,7 @@ import { AccountDetailComponent } from 'src/components/AccountDetail/AccountDeta
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouteGuardService } from 'src/services/RouteGuard.service';
 import { MainComponent } from 'src/components/Main/Main.component';
+import { CreateAccountComponent } from 'src/components/CreateAccount/CreateAccount.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MainComponent } from 'src/components/Main/Main.component';
     RegisterComponent,
     AccountComponent,
     AccountDetailComponent,
-    MainComponent
+    MainComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,

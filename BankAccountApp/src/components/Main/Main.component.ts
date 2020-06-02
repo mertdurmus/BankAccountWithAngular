@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./Main.component.css'],
   providers: [AuthService]
 })
-export class MainComponent implements OnInit {  
+export class MainComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router) { }
 
