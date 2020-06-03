@@ -3,5 +3,5 @@ export class Account{
     accountId: number;
     amount: number;
     currency: string;
-    userId: number;
+    userId: string;
 }

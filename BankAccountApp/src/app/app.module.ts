@@ -12,6 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouteGuardService } from 'src/services/RouteGuard.service';
 import { MainComponent } from 'src/components/Main/Main.component';
 import { CreateAccountComponent } from 'src/components/CreateAccount/CreateAccount.component';
+import { GetTransactionComponent } from 'src/components/getTransaction/getTransaction.component';
+import { CurrencyService } from 'src/services/Currency.service';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -21,16 +24,17 @@ import { CreateAccountComponent } from 'src/components/CreateAccount/CreateAccou
     AccountComponent,
     AccountDetailComponent,
     MainComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    GetTransactionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [AlertifyService, RouteGuardService],
+  providers: [AlertifyService, RouteGuardService, CurrencyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

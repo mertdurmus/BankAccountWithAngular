@@ -13,16 +13,29 @@ export class AccountDetailComponent implements OnInit {
 
   account: Account;
   allAccount: Account[];
-  constructor(private activatedRoute: ActivatedRoute,
-              private accountService: AccountService) { }
+  constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.getAccountById(params['accountId']);
-      this.getAllAcc();
-    })
+  //  this.getAllAcc();
+  
+      this.activatedRoute.params.subscribe(params => {
+        this.getAccountById(params['accountId']);
+      })
+
   }
   getAccountById(accountId) {
+    /*
+    for (var val = 0; val < this.allAccount.length; val++) {
+      if (this.allAccount[val].accountId == accountId) {
+        this.account = this.allAccount[val];
+        console.log(this.account);
+      }
+    }
+    */
+
+    this.accountService.getAccountById(accountId).then(value => {
+      this.account = value;
+    });
   }
 
   getAllAcc() {
@@ -31,4 +44,5 @@ export class AccountDetailComponent implements OnInit {
       console.log(this.allAccount);
     });
   }
+
 }
