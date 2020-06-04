@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, MinLengthValidator } from '@angular/forms';
 import { AuthService } from 'src/services/Auth.service';
 import { User } from 'src/models/user';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +32,9 @@ export class RegisterComponent implements OnInit {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       userName: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
+
+  get f() { return this.registerForm.controls; }
 }

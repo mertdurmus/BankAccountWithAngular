@@ -1,8 +1,8 @@
 export class Transaction{
     actionDate: Date;
     transactionId: string;
-    senderId: string;
-    receiverId: string;
+    senderId: number;
+    receiverId: number;
     amount: number;
     description: string;
 }

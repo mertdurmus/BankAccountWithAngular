@@ -17,94 +17,44 @@ export class MainComponent implements OnInit {
 
   isUserLogged = false;
 
-  rate = {};
-  rates = [];
-  rateKeys = [];
-  symbol = {};
-  symbols = [];
-  symbolKeys = [];
+
+  USDTRY: number;
+  EURTRY: number;
+  XAUTRY: number;
+
 
 
   logOut() {
     this.authService.logOut();
     this.isUserLoggedIn();
   }
-  login() {
-    this.router.navigateByUrl('/login');
-    this.isUserLoggedIn();
-  }
-
-  isUserLoggedIn() {
-    let cs = this.authService.isUserLoggedIn();
-    if (cs) {
-      this.isUserLogged = true;
-    } else {
-      this.isUserLogged = false;
-    }
-
-
-  }
-
-  ngOnInit() {
-    this.isUserLoggedIn();
-    this.init();
-    
-  }
-
-test(){
-  this.convert();
+login() {
+  this.router.navigateByUrl('/login');
+  this.isUserLoggedIn();
 }
 
-  init() {
-    this.currencyService.currencyRate().subscribe(
-      data => {
-        this.rate = data['rates'];
-        this.rateKeys = Object.keys(this.rate);
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.rateKeys.length; i++) {
-          this.rates.push({
-            code: this.rateKeys[i],
-            text: this.rate[this.rateKeys[i]]
-          });
-        }
-        console.log(data);
-      },
-      err => {}
-    );
-
-    this.currencyService.currencySymbols().subscribe(
-      data => {
-        this.symbol = data['symbols'];
-        this.symbolKeys = Object.keys(this.symbol);
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.symbolKeys.length; i++) {
-          this.symbols.push({
-            code: this.symbolKeys[i],
-            text: this.symbol[this.symbolKeys[i]]
-          });
-        }
-        console.log(data);
-      },
-      err => {}
-    );
+isUserLoggedIn() {
+  let cs = this.authService.isUserLoggedIn();
+  if (cs) {
+    this.isUserLogged = true;
+  } else {
+    this.isUserLogged = false;
   }
 
 
-  convert() {
-    let from = 'USD';
-    let to = 'TRY';
-    let amount = 1;
-    let toIndex = _.findIndex(this.rates, rate => {
-      return rate.code == to;
-    });
-    let fromIndex = _.findIndex(this.rates, rate => {
-      return rate.code == from;
-    });
-    let ratio = this.rates[toIndex].text / this.rates[fromIndex].text;
-    console.log('ratio: ', ratio.toString());
+}
 
-    let cal = ratio * amount;
+ngOnInit() {
+  this.isUserLoggedIn();
+  
+}
 
-    console.log('cal: ', cal.toString());
-  }
+refresh(){
+
+  this.USDTRY = this.currencyService.getUsdTry();
+  this.EURTRY = this.currencyService.getEurTry();
+  this.XAUTRY = this.currencyService.getXauTry();
+}
+
+
 }

@@ -398,13 +398,15 @@
     <body>
       <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" router-link="#" routerLinkActive="active">Bank Account App</a>
+        <a>USDTRY: {{USDTRY}}</a>
+        <a>EURTRY: {{EURTRY}}</a>
+        <a>XAUTRY: {{XAUTRY}}</a>
         <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
 
+          <li class="nav-item text-nowrap">
               <button *ngIf="!isUserLogged"class="btn btn-sm btn-warning" (click)="login()">
                 Log in
               </button>
-
           </li>
         </ul>
       </nav>
@@ -445,8 +447,8 @@
                 </li>
                 <br>
                 <li class="nav-item">
-                  <button class="btn btn-sm btn-warning" (click)="test()">
-                    test
+                  <button class="btn btn-sm btn-warning" (click)="refresh()">
+                    REFRESH CURRENCY
                   </button>
                 </li>
               </ul>

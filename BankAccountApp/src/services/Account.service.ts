@@ -103,4 +103,36 @@ export class AccountService {
     return account;
   }
 
+
+
+  async setTransactionFirst(transaction: Transaction) {
+    const sender = transaction.senderId;
+    const receiver = transaction.receiverId;
+    const value = transaction.amount;
+    const senderAccount: Account = await this.db.accounts.get({ accountId: sender });
+    let senderAmount = senderAccount.amount;
+    const receiverAccount: Account = await this.db.accounts.get({ accountId: receiver });
+    let receiverAmount = receiverAccount.amount;
+    receiverAmount = receiverAmount + value;
+    senderAmount = senderAmount - value;
+
+    this.db.transactions
+      .add(transaction)
+      .then(() => {
+        this.alertifyService.success('transaction succesfully ');
+      })
+      .catch(e => {
+        console.log('Error: ' + (e.stack || e));
+        this.alertifyService.error('Err! does not send please try again');
+      });
+
+    this.db.accounts.update(sender, { amount: senderAmount }).then(updated => {
+      if (updated) {
+        console.log('success');
+      } else {
+        console.log('err!');
+      }
+    });
+
+  }
 }

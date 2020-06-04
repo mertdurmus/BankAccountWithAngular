@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
   providers: [AccountService]
 })
 export class GetTransactionComponent implements OnInit {
-  senderAccountId: string;
+  senderAccountId: number;
   transactionForm: FormGroup;
   transaction: Transaction;
 
@@ -44,6 +44,7 @@ export class GetTransactionComponent implements OnInit {
     this.transaction = Object.assign({}, this.transactionForm.value);
     this.transaction.senderId = this.senderAccountId;
     this.transaction.transactionId = uuidv4();
+    this.transaction.actionDate = new Date();
     this.accountService.setTransaction(this.transaction);
   }
 

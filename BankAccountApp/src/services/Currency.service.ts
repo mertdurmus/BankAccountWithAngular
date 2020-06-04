@@ -1,24 +1,130 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import * as _ from 'lodash';
+import Dexie from 'dexie';
 
 @Injectable()
 export class CurrencyService {
 
-constructor(private http: HttpClient) { }
+  rate = {};
+  rates = [];
+  rateKeys = [];
+  symbol = {};
+  symbols = [];
+  symbolKeys = [];
+  USDTRY: number;
+  EURTRY: number;
+  XAUTRY: number;
+
+constructor(private http: HttpClient) {
+ // this.createDatabase();
+ }
 
 // set endpoint and your API key
 endpoint = 'convert';
 access_key = 'f6b7c464aba53cb70256cc58781ca137';
 baseURL = 'http://data.fixer.io/api/';
-
+private db: any;
+/*
+private createDatabase() {
+  this.db = new Dexie('MyCurrencyDatabase');
+  this.db.version(1).stores({ currency: ' name, value' });
+}
+*/
 currencySymbols() {
   return this.http.get(
     this.baseURL + 'symbols?access_key=' + this.access_key
+  ).subscribe(
+    data => {
+      this.symbol = data['symbols'];
+      this.symbolKeys = Object.keys(this.symbol);
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.symbolKeys.length; i++) {
+        this.symbols.push({
+          code: this.symbolKeys[i],
+          text: this.symbol[this.symbolKeys[i]]
+        });
+      }
+      console.log(data);
+    },
+    err => { }
   );
 }
 currencyRate() {
-  return this.http.get(this.baseURL + 'latest?access_key=' + this.access_key);
+  return this.http.get(this.baseURL + 'latest?access_key=' + this.access_key).subscribe(
+    data => {
+      this.rate = data['rates'];
+      this.rateKeys = Object.keys(this.rate);
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.rateKeys.length; i++) {
+        this.rates.push({
+          code: this.rateKeys[i],
+          text: this.rate[this.rateKeys[i]]
+        });
+      }
+      console.log(data);
+    },
+    err => { }
+  );
+}
+
+convert(fromX: string, toX: string, value: number): number {
+  let from = fromX;
+  let to = toX;
+  let amount = value;
+  let toIndex = _.findIndex(this.rates, rate => {
+    return rate.code === to;
+  });
+  let fromIndex = _.findIndex(this.rates, rate => {
+    return rate.code === from;
+  });
+  let ratio = this.rates[toIndex].text / this.rates[fromIndex].text;
+  //  console.log('ratio: ', ratio.toString());
+  let cal = ratio * amount;
+
+  console.log('cal: ', cal.toString());
+  return cal;
 }
 
 
+need(fromX: string, toX: string, value: number): number {
+  let from = fromX;
+  let to = toX;
+  let amount = value;
+  let toIndex = _.findIndex(this.rates, rate => {
+    return rate.code === to;
+  });
+  let fromIndex = _.findIndex(this.rates, rate => {
+    return rate.code === from;
+  });
+  let ratio = this.rates[toIndex].text / this.rates[fromIndex].text;
+  let cal = amount / ratio;
+  return cal;
+}
+
+test(){
+  this.USDTRY = this.convert('USD', 'TRY', 1);
+  this.EURTRY = this.convert('EUR', 'TRY', 1);
+  this.XAUTRY = this.convert('XAU', 'TRY', 1);
+}
+
+getUsdTry(){
+  this.test();
+  console.log(this.USDTRY);
+  return this.USDTRY;
+}
+
+getEurTry(){
+  return this.EURTRY;
+}
+
+getXauTry(){
+  return this.XAUTRY;
+}
+
+refresh(){
+  this.currencyRate();
+  this.currencySymbols();
+//  this.test();
+}
 }

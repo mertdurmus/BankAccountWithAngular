@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/services/Auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginUser } from 'src/models/loginUser';
+import { CurrencyService } from 'src/services/Currency.service';
 
 @Component({
   selector: 'app-Login',
@@ -14,10 +15,12 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginUser: LoginUser;
 
-  constructor( private authService: AuthService) { }
+  constructor( private authService: AuthService,
+               private currencyService: CurrencyService) { }
 
   ngOnInit() {
     this.createForm();
+    this.currencyService.refresh();
   }
 
   logUser() {
