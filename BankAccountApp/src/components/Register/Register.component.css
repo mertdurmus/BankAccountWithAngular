@@ -3,7 +3,7 @@
     html {
         margin: 30px;
         padding: 30px;
-        height: 100%;
+        height: 80%;
         background: #60a3bc !important;
     }
     .h3 {
@@ -43,7 +43,7 @@
         border: 2px solid white;
     }
     .form_container {
-        margin-top: 100px;
+        margin-top: 85;
     }
     .login_btn {
         width: 100%;

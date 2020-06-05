@@ -19,14 +19,14 @@ export class AuthService {
   user1: User;
 
   constructor(private alertifyService: AlertifyService,
-              private router: Router, ) {
+    private router: Router, ) {
     this.createDatabase();
   }
 
 
   private createDatabase() {
     this.db = new Dexie('MyAppDatabase');
-    this.db.version(1).stores({ users: '++id, firstName, lastName, userName, password' });
+    this.db.version(1).stores({ users: '++id, firstName, lastName, userName, password, confirmPassword' });
   }
 
   addToIndexedDb(user: User) {
@@ -46,13 +46,19 @@ export class AuthService {
 
   async login(loginUser: LoginUser) {
     const user = await this.db.users.where('userName').equals(loginUser.userName).toArray();
-    if (user[0].password === loginUser.password) {
-      localStorage.setItem(AUTHENTICATED_USER, loginUser.userName);
-      this.alertifyService.success('Succecfully Login');
-      this.router.navigateByUrl('/account');
+    console.log(user[0]);
+    if (user[0]) {
+      if (user[0].password === loginUser.password) {
+        localStorage.setItem(AUTHENTICATED_USER, loginUser.userName);
+        this.alertifyService.success('Succecfully Login');
+        this.router.navigateByUrl('/account');
+      } else {
+        this.alertifyService.warning('password incorrect');
+      }
     } else {
-      this.alertifyService.warning('login not succesfully');
+      this.alertifyService.error('username incorrect');
     }
+
 
   }
 

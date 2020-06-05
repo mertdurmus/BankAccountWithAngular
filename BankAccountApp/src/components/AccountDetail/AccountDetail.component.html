@@ -1,9 +1,37 @@
-<div class="jumbotron">
+<div *ngIf="account" class="jumbotron">
   <h1 class="display-4">{{account.name}}</h1>
   <p class="lead">{{account.amount}}</p>
   <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
   <p class="lead">
     <a class="btn btn-primary btn-lg" routerLink="/getTransaction/{{account.accountId}}" role="button">Do Transaction</a>
   </p>
+  <p class="lead">
+   <button class="btn btn-primary" (click)=showTransaction()>Show My Transactions</button>
+  </p>
 </div>
+
+<table *ngIf="allSend" class="table">
+  <thead  class="thead-dark">
+    <tr >
+      <th scope="col">TransactionDate</th>
+      <th scope="col">AMOUNT</th>
+      <th scope="col">SENDER</th>
+      <th scope="col">RECEIVER</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let send of allSend">
+      <th scope="row">{{send.actionDate}}</th>
+      <td [appColor]= "'red'" >{{send.amount}}</td>
+      <td>{{send.senderId}}</td>
+      <td>{{send.receiverId}}</td>
+    </tr>
+    <tr *ngFor="let receive of allReceive">
+      <th scope="row">{{receive.actionDate}}</th>
+      <td [appColor]= "'green'">{{receive.amount}}</td>
+      <td>{{receive.senderId}}</td>
+      <td>{{receive.receiverId}}</td>
+    </tr>
+   
+  </tbody>
+</table>

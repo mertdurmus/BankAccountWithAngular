@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/services/Account.service';
 import { Account } from 'src/models/account';
+import { Transaction } from 'src/models/transaction';
 
 @Component({
   selector: 'app-AccountDetail',
@@ -13,26 +14,25 @@ export class AccountDetailComponent implements OnInit {
 
   account: Account;
   allAccount: Account[];
+  allSend: Transaction[];
+  allReceive: Transaction[];
+  greenColor = 'green';
+  redColor = 'red';
+
+
+  // filtersLoaded;
   constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService) { }
 
   ngOnInit() {
-  //  this.getAllAcc();
-  
-      this.activatedRoute.params.subscribe(params => {
-        this.getAccountById(params['accountId']);
-      })
+    //  this.getAllAcc();
 
+    this.activatedRoute.params.subscribe(params => {
+      this.getAccountById(params['accountId']);
+    });
+    // this.getAllReceive();
+    //  this.getAllSend();
   }
   getAccountById(accountId) {
-    /*
-    for (var val = 0; val < this.allAccount.length; val++) {
-      if (this.allAccount[val].accountId == accountId) {
-        this.account = this.allAccount[val];
-        console.log(this.account);
-      }
-    }
-    */
-
     this.accountService.getAccountById(accountId).then(value => {
       this.account = value;
     });
@@ -41,8 +41,26 @@ export class AccountDetailComponent implements OnInit {
   getAllAcc() {
     this.accountService.getAllAccount().then(value => {
       this.allAccount = value;
-      console.log(this.allAccount);
     });
   }
 
+  getAllSend() {
+    const accntId = this.account.accountId;
+    this.accountService.getAllSend(accntId).then(value => {
+      this.allSend = value;
+      console.log(this.allSend);
+    });
+  }
+  getAllReceive() {
+    const accntId = this.account.accountId;
+    this.accountService.getAllReceive(accntId).then(value => {
+      this.allReceive = value;
+      console.log(this.allReceive);
+    });
+  }
+
+  showTransaction() {
+    this.getAllSend();
+    this.getAllReceive();
+  }
 }

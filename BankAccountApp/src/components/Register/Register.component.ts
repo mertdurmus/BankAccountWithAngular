@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, MinLengthValidator } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/services/Auth.service';
 import { User } from 'src/models/user';
 import { v4 as uuidv4 } from 'uuid';
+import { ConfirmedValidator } from './ConfirmedValidator';
 
 @Component({
   selector: 'app-Register',
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user: User;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.createForm();
@@ -28,12 +30,15 @@ export class RegisterComponent implements OnInit {
   }
 
   createForm() {
-    this.registerForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      userName: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)])
-    });
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+  }, {
+      validator: ConfirmedValidator('password', 'confirmPassword')
+  });
   }
 
   get f() { return this.registerForm.controls; }

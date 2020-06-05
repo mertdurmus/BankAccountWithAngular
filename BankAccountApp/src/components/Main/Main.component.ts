@@ -3,20 +3,23 @@ import { AuthService } from 'src/services/Auth.service';
 import { Router } from '@angular/router';
 import { CurrencyService } from 'src/services/Currency.service';
 import * as _ from 'lodash';
+import { AccountService } from 'src/services/Account.service';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-Main',
   templateUrl: './Main.component.html',
   styleUrls: ['./Main.component.css'],
-  providers: [AuthService]
+  providers: [AuthService, AccountService]
 })
 export class MainComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
-              private currencyService: CurrencyService) { }
+              private currencyService: CurrencyService,
+              private accountService: AccountService) { }
 
   isUserLogged = false;
-
+  numbersOfAccount: number;
 
   USDTRY: number;
   EURTRY: number;
@@ -46,7 +49,14 @@ isUserLoggedIn() {
 
 ngOnInit() {
   this.isUserLoggedIn();
-  
+  this.accountService.accntNumber.subscribe(
+    {
+      next: (v) => console.log(`observerA: ${v}`)// this.numbersOfAccount = v
+
+    }
+  );
+  console.log(this.numbersOfAccount);
+  this.currencyService.refresh();
 }
 
 refresh(){

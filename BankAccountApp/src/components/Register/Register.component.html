@@ -33,9 +33,18 @@
           </div>
           <div class="alert alert-danger" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').dirty">Password is required</div>
           <div class="alert alert-danger" *ngIf="registerForm.get('password').hasError('minlength')">Password must be at least 6 characters</div>
-
+    
+        <div class="input-group mb-3">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fas fa-key"></i></span>
+          </div>
+          <input  type="password" formControlName="confirmPassword" class="form-control input_pass" value="" placeholder="confirmPassword">
+        </div>
+        <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').dirty">Password is required</div>
+        <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword').hasError('confirmedValidator')">Password and Confirm Password must be match</div>
+     
             <div class="d-flex justify-content-center mt-3 login_container">
-         <button type="button" name="button" type="submit" class="btn login_btn">Register</button>
+         <button type="button" name="button" type="submit" [disabled]="!registerForm.valid" class="btn login_btn">Register</button>
          </div>
         </form>
       </div>

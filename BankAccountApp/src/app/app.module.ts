@@ -15,6 +15,7 @@ import { CreateAccountComponent } from 'src/components/CreateAccount/CreateAccou
 import { GetTransactionComponent } from 'src/components/getTransaction/getTransaction.component';
 import { CurrencyService } from 'src/services/Currency.service';
 import { HttpClientModule } from "@angular/common/http";
+import { ColorDirective } from './directives/color.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HttpClientModule } from "@angular/common/http";
     AccountDetailComponent,
     MainComponent,
     CreateAccountComponent,
-    GetTransactionComponent
+    GetTransactionComponent,
+    ColorDirective
   ],
   imports: [
     BrowserModule,
