@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/services/Account.service';
 import { Account } from 'src/models/account';
 import { Transaction } from 'src/models/transaction';
+import { CustomCurrencyPipe } from 'src/app/pipes/currency.pipe';
 
 @Component({
   selector: 'app-AccountDetail',
   templateUrl: './AccountDetail.component.html',
   styleUrls: ['./AccountDetail.component.css'],
-  providers: [AccountService]
+  providers: [AccountService, CustomCurrencyPipe]
 })
 export class AccountDetailComponent implements OnInit {
 
@@ -19,9 +20,8 @@ export class AccountDetailComponent implements OnInit {
   greenColor = 'green';
   redColor = 'red';
 
-
   // filtersLoaded;
-  constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService) { }
+  constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService, private currency: CustomCurrencyPipe) { }
 
   ngOnInit() {
     //  this.getAllAcc();

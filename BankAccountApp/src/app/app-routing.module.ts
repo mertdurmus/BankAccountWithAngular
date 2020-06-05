@@ -14,6 +14,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'createAccount', component: CreateAccountComponent},
   { path: 'getTransaction/:accountId', component: GetTransactionComponent},
+  { path: 'getTransaction', component: GetTransactionComponent},
+  { path: 'getTransaction/:virman/:userId', component: GetTransactionComponent},
   { path: 'accountDetail/:accountId', component: AccountDetailComponent},
   { path: 'account', component: AccountComponent,  canActivate: [RouteGuardService]},
   {path: '**', redirectTo: 'account', pathMatch: 'full'},

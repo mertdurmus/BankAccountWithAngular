@@ -16,6 +16,9 @@ import { GetTransactionComponent } from 'src/components/getTransaction/getTransa
 import { CurrencyService } from 'src/services/Currency.service';
 import { HttpClientModule } from "@angular/common/http";
 import { ColorDirective } from './directives/color.directive';
+import { CustomCurrencyPipe } from './pipes/currency.pipe';
+import { CurrencyPipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { ColorDirective } from './directives/color.directive';
     MainComponent,
     CreateAccountComponent,
     GetTransactionComponent,
-    ColorDirective
+    ColorDirective,
+    CustomCurrencyPipe
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,7 @@ import { ColorDirective } from './directives/color.directive';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AlertifyService, RouteGuardService, CurrencyService],
+  providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

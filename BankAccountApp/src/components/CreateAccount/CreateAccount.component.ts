@@ -22,7 +22,9 @@ export class CreateAccountComponent implements OnInit {
   accounts: Account[];
   senderAccountId: number;
   senderAmount: number;
-  transaction: Transaction = {actionDate: new Date(), transactionId: '0', senderId: 10, receiverId: 10, description: 'init', amount: 0};
+  senderAccount: Account;
+  transaction: Transaction = {actionDate: new Date(), transactionId: '0', senderId: 10,
+   receiverId: 10, description: 'init', amount: 0, senderName: 'init', currency: 'init'};
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -56,7 +58,7 @@ export class CreateAccountComponent implements OnInit {
     this.account.userId = this.id;
     this.account.accountId = uuidv4();
     this.accountService.addAccount(this.account);
-    console.log(this.senderAccountId);
+ //   console.log(this.senderAccountId);
     this.transformation();
   }
 
@@ -71,12 +73,13 @@ export class CreateAccountComponent implements OnInit {
   getAccounts() {
     this.accountService.getAllAccount().then(value => {
       this.accounts = value;
-      console.log(this.accounts);
+   //   console.log(this.accounts);
     });
   }
   transformation(){
    const senderAccount = this.accounts.filter(x => x.accountId === this.senderAccountId)[0];
-   console.log(senderAccount.currency);
+   this.senderAccount = senderAccount;
+   console.log(this.senderAccount.currency);
    const senderCurrency = senderAccount.currency;
    const receiverCurrency = this.account.currency;
    const receiverAmount = this.account.amount;
@@ -93,6 +96,8 @@ export class CreateAccountComponent implements OnInit {
     this.transaction.description = 'creating new account';
     this.transaction.receiverId = this.account.accountId;
     this.transaction.senderId = this.senderAccountId;
+    this.transaction.senderName = this.senderAccount.name;
+    this.transaction.currency = this.senderAccount.currency;
     this.accountService.setTransactionFirst(this.transaction);
 
 

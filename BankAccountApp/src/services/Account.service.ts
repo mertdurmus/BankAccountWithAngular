@@ -41,15 +41,14 @@ await this.accntNumber.next(this.accountNumber);
   private createDatabase() {
   this.db = new Dexie('MyBankDatabase');
   this.db.version(1).stores({ accounts: '++accountId, name, amount, currency, userId' });
-  this.db.version(1).stores({ transactions: '++transactionId, actionDate, amount, senderId, description, receiverId' });
+  // tslint:disable-next-line:max-line-length
+  this.db.version(1).stores({ transactions: '++transactionId, actionDate, amount, senderId, description, receiverId, senderName, currency' });
 }
 
 addAccount(account: Account) {
   this.db.accounts
     .add(account)
     .then(() => {
-      //  const allItems: Account[] = await this.db.accounts.toArray();
-      //  console.log('saved in DB, DB is now', allItems);
       this.alertifyService.success('account succesfully created');
       this.accountNumber += 1;
       this.accntNumber.next(this.accountNumber);
@@ -122,9 +121,9 @@ async getAllReceive(accountId: number) {
 }
 
 async getAccountById(accntId) {
-  console.log(accntId);
+ // console.log(accntId);
   const x = accntId;
-  const usrId = localStorage.getItem(AUTHENTICATED_USER_ID);
+//  const usrId = localStorage.getItem(AUTHENTICATED_USER_ID);
   const account: Account = await this.db.accounts.get({ accountId: x });
   console.log(x, ': ', account);
   return account;

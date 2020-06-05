@@ -1,6 +1,6 @@
 <div *ngIf="account" class="jumbotron">
   <h1 class="display-4">{{account.name}}</h1>
-  <p class="lead">{{account.amount}}</p>
+  <p class="lead">{{account.amount | currency: account.currency}}</p>
   <hr class="my-4">
   <p class="lead">
     <a class="btn btn-primary btn-lg" routerLink="/getTransaction/{{account.accountId}}" role="button">Do Transaction</a>
@@ -10,28 +10,34 @@
   </p>
 </div>
 
-<table *ngIf="allSend" class="table">
+<table id="myTable" *ngIf="allSend" class="table">
   <thead  class="thead-dark">
-    <tr >
+    <tr  >
       <th scope="col">TransactionDate</th>
       <th scope="col">AMOUNT</th>
-      <th scope="col">SENDER</th>
-      <th scope="col">RECEIVER</th>
+      <th scope="col">SENDER ACCOUNT</th>
+      <th scope="col">RECEIVER ACCOUNT</th>
+      <th scope="col">CURRENCY</th>
+      <th scope="col">DESCRIPTION</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let send of allSend">
-      <th scope="row">{{send.actionDate}}</th>
+      <th scope="row">{{send.actionDate | date:'short'}}</th>
       <td [appColor]= "'red'" >{{send.amount}}</td>
-      <td>{{send.senderId}}</td>
+      <td>{{account.name}}</td>
       <td>{{send.receiverId}}</td>
+      <td>{{send.currency}}</td>
+      <td>{{send.description}}</td>
     </tr>
     <tr *ngFor="let receive of allReceive">
-      <th scope="row">{{receive.actionDate}}</th>
+      <th scope="row">{{receive.actionDate | date:'short'}}</th>
       <td [appColor]= "'green'">{{receive.amount}}</td>
       <td>{{receive.senderId}}</td>
-      <td>{{receive.receiverId}}</td>
+      <td>{{account.name}}</td>
+      <td>{{receive.currency}}</td>
+      <td>{{receive.description}}</td>
     </tr>
-   
   </tbody>
 </table>
+

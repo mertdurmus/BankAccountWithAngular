@@ -56,7 +56,7 @@ ngOnInit() {
     }
   );
   console.log(this.numbersOfAccount);
-  this.currencyService.refresh();
+//  this.currencyService.refresh();
 }
 
 refresh(){
