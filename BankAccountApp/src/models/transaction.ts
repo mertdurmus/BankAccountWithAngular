@@ -7,4 +7,5 @@ export class Transaction{
     receiverId: number;
     amount: number;
     description: string;
+    userId: string;
 }

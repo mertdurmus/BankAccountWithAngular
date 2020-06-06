@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Account } from 'src/models/account';
-import { AuthService, AUTHENTICATED_USER_ID } from 'src/services/Auth.service';
+import { AuthService, AUTHENTICATED_USER_ID, AUTHENTICATED_USER } from 'src/services/Auth.service';
 import { AccountService } from 'src/services/Account.service';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyService } from 'src/services/Currency.service';
@@ -23,8 +23,9 @@ export class CreateAccountComponent implements OnInit {
   senderAccountId: number;
   senderAmount: number;
   senderAccount: Account;
+  userId;
   transaction: Transaction = {actionDate: new Date(), transactionId: '0', senderId: 10,
-   receiverId: 10, description: 'init', amount: 0, senderName: 'init', currency: 'init'};
+   receiverId: 10, description: 'init', amount: 0, senderName: 'init', currency: 'init', userId: 'init'};
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -32,6 +33,7 @@ export class CreateAccountComponent implements OnInit {
               private currencyService: CurrencyService) { }
 
   ngOnInit() {
+    this.userId = localStorage.getItem(AUTHENTICATED_USER);
     this.accountService.getAllAccount().then(value => {
       if (value.length === 0) {
         this.firstAccountCheck = true;
@@ -58,7 +60,6 @@ export class CreateAccountComponent implements OnInit {
     this.account.userId = this.id;
     this.account.accountId = uuidv4();
     this.accountService.addAccount(this.account);
- //   console.log(this.senderAccountId);
     this.transformation();
   }
 
@@ -73,7 +74,6 @@ export class CreateAccountComponent implements OnInit {
   getAccounts() {
     this.accountService.getAllAccount().then(value => {
       this.accounts = value;
-   //   console.log(this.accounts);
     });
   }
   transformation(){
@@ -98,6 +98,7 @@ export class CreateAccountComponent implements OnInit {
     this.transaction.senderId = this.senderAccountId;
     this.transaction.senderName = this.senderAccount.name;
     this.transaction.currency = this.senderAccount.currency;
+    this.transaction.userId = this.userId;
     this.accountService.setTransactionFirst(this.transaction);
 
 

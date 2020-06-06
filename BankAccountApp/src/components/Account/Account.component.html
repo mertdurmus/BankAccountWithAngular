@@ -36,3 +36,24 @@
     </div>
   </div>
 </div>
+<div *ngIf="transactionLastTen" class="container">
+  <h2 class="info">Recent Events</h2>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Description</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Currency</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let t of transactionLastTen ">
+      <th scope="row">{{t.description}}</th>
+      <td>{{t.amount}}</td>
+      <td>{{t.currency}}</td>
+      <td>{{t.actionDate}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>

@@ -7,12 +7,14 @@ import { RouteGuardService } from 'src/services/RouteGuard.service';
 import { CreateAccountComponent } from 'src/components/CreateAccount/CreateAccount.component';
 import { AccountDetailComponent } from 'src/components/AccountDetail/AccountDetail.component';
 import { GetTransactionComponent } from 'src/components/getTransaction/getTransaction.component';
+import { TransfersComponent } from 'src/components/Transfers/Transfers.component';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
   { path: 'createAccount', component: CreateAccountComponent},
+  { path: 'transfers', component: TransfersComponent},
   { path: 'getTransaction/:accountId', component: GetTransactionComponent},
   { path: 'getTransaction', component: GetTransactionComponent},
   { path: 'getTransaction/:virman/:userId', component: GetTransactionComponent},

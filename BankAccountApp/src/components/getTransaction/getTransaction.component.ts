@@ -74,6 +74,7 @@ export class GetTransactionComponent implements OnInit {
   onSubmit(){
     this.transaction = Object.assign({}, this.transactionForm.value);
     this.transaction.senderId = this.senderAccountId;
+    this.transaction.userId = this.userId;
     this.transaction.transactionId = uuidv4();
     this.transaction.actionDate = new Date();
     this.transaction.senderName = this.account.name;
@@ -93,6 +94,7 @@ export class GetTransactionComponent implements OnInit {
     this.transaction.senderId = this.senderAccountId;
     this.transaction.receiverId = this.receiverId;
     this.transaction.transactionId = uuidv4();
+    this.transaction.userId = this.userId;
     this.transaction.actionDate = new Date();
     this.transaction.senderName = this.account.name;
     this.transaction.currency = this.account.currency;

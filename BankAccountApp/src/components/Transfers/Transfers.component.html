@@ -1,0 +1,75 @@
+<div *ngIf="transaction" class="container">
+  <h2 style="text-align: center;">All Transfers</h2>
+  <div class="md-form">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="filterText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="filterText"
+            />
+            <p><small> Search in description</small></p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="amountText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="amountText"
+            />
+            <p><small> Search in amount</small></p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="currencyText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="currencyText"
+            />
+            <p><small> Search in currency</small></p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="dateText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="dateText"
+            />
+            <p><small> Search in date</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table id="transfer-table" class="table" data-filter-control="true">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transaction ">
+        <th scope="row">{{ t.description }}</th>
+        <td>{{ t.amount }}</td>
+        <td>{{ t.currency }}</td>
+        <td>{{ t.actionDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

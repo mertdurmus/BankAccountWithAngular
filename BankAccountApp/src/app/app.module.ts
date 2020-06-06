@@ -18,6 +18,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { ColorDirective } from './directives/color.directive';
 import { CustomCurrencyPipe } from './pipes/currency.pipe';
 import { CurrencyPipe } from '@angular/common';
+import { TransfersComponent } from 'src/components/Transfers/Transfers.component';
+import { FilterTablePipe } from './pipes/filterTable.pipe';
+
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { CurrencyPipe } from '@angular/common';
     CreateAccountComponent,
     GetTransactionComponent,
     ColorDirective,
-    CustomCurrencyPipe
+    CustomCurrencyPipe,
+    TransfersComponent,
+    FilterTablePipe
+
   ],
   imports: [
     BrowserModule,
