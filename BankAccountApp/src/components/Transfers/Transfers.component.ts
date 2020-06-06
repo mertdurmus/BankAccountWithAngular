@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/services/Account.service';
 import { Transaction } from 'src/models/transaction';
-import { FilterTablePipe } from 'src/app/pipes/filterTable.pipe';
+
+
 
 @Component({
   selector: 'app-Transfers',
@@ -29,3 +30,60 @@ export class TransfersComponent implements OnInit {
     });
   }
 }
+
+/*
+ <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="filterText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="filterText"
+            />
+            <p><small> Search in description</small></p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="amountText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="amountText"
+            />
+            <p><small> Search in amount</small></p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="currencyText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="currencyText"
+            />
+            <p><small> Search in currency</small></p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="dateText"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="dateText"
+            />
+            <p><small> Search in date</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+*/

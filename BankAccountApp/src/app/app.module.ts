@@ -20,6 +20,8 @@ import { CustomCurrencyPipe } from './pipes/currency.pipe';
 import { CurrencyPipe } from '@angular/common';
 import { TransfersComponent } from 'src/components/Transfers/Transfers.component';
 import { FilterTablePipe } from './pipes/filterTable.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+
 
 
 
@@ -36,7 +38,8 @@ import { FilterTablePipe } from './pipes/filterTable.pipe';
     ColorDirective,
     CustomCurrencyPipe,
     TransfersComponent,
-    FilterTablePipe
+    FilterTablePipe,
+    FilterPipe
 
   ],
   imports: [

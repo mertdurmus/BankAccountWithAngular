@@ -4,7 +4,8 @@ import { Transaction } from 'src/models/transaction';
 @Pipe({
   name: 'filterTable'
 })
-@Injectable()
+
+
 export class FilterTablePipe implements PipeTransform {
 
   transform(value: Transaction[], fiterText?: string): Transaction[] {
