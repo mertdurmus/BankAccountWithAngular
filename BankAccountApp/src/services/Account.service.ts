@@ -9,7 +9,7 @@ import { CurrencyService } from './Currency.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TransferState } from '@angular/platform-browser';
 
-
+export const accountNumber = 'accountNumber' ;
 
 
 
@@ -19,12 +19,14 @@ export class AccountService {
 
   constructor(private alertifyService: AlertifyService, private router: Router, private currencyService: CurrencyService) {
     this.createDatabase();
+    this.nn = localStorage.getItem(accountNumber);
+    this.accntNumber.next(this.nn);
   }
 
   private db: any;
   x: number;
   accounts: Account[];
-  accountNumber;
+  nn;
   accntNumber = new BehaviorSubject<number>(0);
 
 
@@ -46,13 +48,18 @@ await this.accntNumber.next(this.accountNumber);
   this.db.version(1).stores({ transactions: '++transactionId, actionDate, amount, senderId, description, receiverId, senderName, currency, userId' });
 }
 
-addAccount(account: Account) {
+ addAccount(account: Account) {
   this.db.accounts
     .add(account)
-    .then(() => {
+    .then(async () => {
       this.alertifyService.success('account succesfully created');
-      this.accountNumber += 1;
-      this.accntNumber.next(this.accountNumber);
+      // this.accountNumber += 1;
+      const userId = localStorage.getItem(AUTHENTICATED_USER_ID);
+      const allItems: Account[] = await this.db.accounts.where('userId').equals(userId).toArray();
+      setTimeout(() => {localStorage.setItem(accountNumber, allItems.length.toString()); }, 100);
+     // console.log('allitems: ', allItems.length);
+      this.accntNumber.next(allItems.length);
+     // console.log('accountttttt: ', this.accountNumber);
 
     })
     .catch(e => {

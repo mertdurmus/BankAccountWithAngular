@@ -417,7 +417,7 @@
             <div class="sidebar-sticky">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link active" routerLink="account" routerLinkActive="active">
+                  <a class="nav-link active" routerLink="account" (click)="refreh() "routerLinkActive="active">
                     Accounts   {{numbersOfAccount}}
                   </a> <span class="sr-only">(current)</span>
                 </li>
@@ -433,7 +433,7 @@
                     Show My Transfers
                   </a>
                 </li>
-                <li class="nav-item">
+                <li  *ngIf="isUserLogged" class="nav-item">
                   <button class="btn btn-sm btn-warning" (click)="logOut()">
                     Log out
                   </button>

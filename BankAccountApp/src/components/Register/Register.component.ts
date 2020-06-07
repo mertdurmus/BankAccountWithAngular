@@ -4,6 +4,7 @@ import { AuthService } from 'src/services/Auth.service';
 import { User } from 'src/models/user';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfirmedValidator } from './ConfirmedValidator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Register',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
   user: User;
 
   constructor(private authService: AuthService,
+              private router: Router,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -27,6 +29,7 @@ export class RegisterComponent implements OnInit {
     console.log(this.user.firstName);
     this.user.id = uuidv4();
     this.authService.addToIndexedDb(this.user);
+    this.router.navigateByUrl('/login');
   }
 
   createForm() {

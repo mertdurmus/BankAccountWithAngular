@@ -19,8 +19,9 @@ import { ColorDirective } from './directives/color.directive';
 import { CustomCurrencyPipe } from './pipes/currency.pipe';
 import { CurrencyPipe } from '@angular/common';
 import { TransfersComponent } from 'src/components/Transfers/Transfers.component';
-import { FilterTablePipe } from './pipes/filterTable.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AccountService } from 'src/services/Account.service';
 
 
 
@@ -38,7 +39,6 @@ import { FilterPipe } from './pipes/filter.pipe';
     ColorDirective,
     CustomCurrencyPipe,
     TransfersComponent,
-    FilterTablePipe,
     FilterPipe
 
   ],
@@ -47,9 +47,11 @@ import { FilterPipe } from './pipes/filter.pipe';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
+
   ],
-  providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe],
+  providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe, AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

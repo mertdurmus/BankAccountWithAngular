@@ -6,12 +6,25 @@ import { Transaction } from 'src/models/transaction';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: Transaction[], fiterText?: string, currencyText?: string): Transaction[] {
+  transform(value: Transaction[], fiterText?: string, currencyText?: string, amountText?: number, dateText?: string): Transaction[] {
     fiterText = fiterText ? fiterText.toLocaleLowerCase() : null;
-
-    return fiterText ? value.filter((p: Transaction ) =>
-    // tslint:disable-next-line:max-line-length
-    p.description.toLocaleLowerCase().indexOf(fiterText) !== -1 && p.currency.toLocaleLowerCase().indexOf(currencyText) !== -1
+    if (currencyText) {
+      return currencyText ? value.filter((p: Transaction) =>
+        p.currency.toLocaleLowerCase().indexOf(currencyText) !== -1
+      ) : value;
+    }
+    if (amountText) {
+      return amountText ? value.filter((p: Transaction) =>
+        p.amount.toString().indexOf(amountText.toString()) !== -1
+      ) : value;
+    }
+    if (dateText) {
+      return dateText ? value.filter((p: Transaction) =>
+        p.actionDate.toString().indexOf(dateText) !== -1
+      ) : value;
+    }
+    return fiterText ? value.filter((p: Transaction) =>
+      p.description.toLocaleLowerCase().indexOf(fiterText) !== -1
     ) : value;
   }
 

@@ -67,13 +67,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of transaction | filter: filterText:currencyText">
+        <tr *ngFor="let t of transaction | filter: filterText:currencyText:amountText:dateText  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           <th scope="row">{{ t.description }}</th>
           <td>{{ t.amount }}</td>
           <td>{{ t.currency }}</td>
-          <td>{{ t.actionDate }}</td>
+          <td>{{ t.actionDate | date:'short' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+<div  *ngIf="transaction" class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+    <option [ngValue]="2">2 items per page</option>
+    <option [ngValue]="4">4 items per page</option>
+    <option [ngValue]="6">6 items per page</option>
+  </select>
 </div>

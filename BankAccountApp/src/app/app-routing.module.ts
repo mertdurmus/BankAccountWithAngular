@@ -13,12 +13,12 @@ import { TransfersComponent } from 'src/components/Transfers/Transfers.component
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
-  { path: 'createAccount', component: CreateAccountComponent},
-  { path: 'transfers', component: TransfersComponent},
-  { path: 'getTransaction/:accountId', component: GetTransactionComponent},
-  { path: 'getTransaction', component: GetTransactionComponent},
-  { path: 'getTransaction/:virman/:userId', component: GetTransactionComponent},
-  { path: 'accountDetail/:accountId', component: AccountDetailComponent},
+  { path: 'createAccount', component: CreateAccountComponent,  canActivate: [RouteGuardService]},
+  { path: 'transfers', component: TransfersComponent,  canActivate: [RouteGuardService]},
+  { path: 'getTransaction/:accountId', component: GetTransactionComponent,  canActivate: [RouteGuardService]},
+  { path: 'getTransaction', component: GetTransactionComponent,  canActivate: [RouteGuardService]},
+  { path: 'getTransaction/:virman/:userId', component: GetTransactionComponent,  canActivate: [RouteGuardService]},
+  { path: 'accountDetail/:accountId', component: AccountDetailComponent,  canActivate: [RouteGuardService]},
   { path: 'account', component: AccountComponent,  canActivate: [RouteGuardService]},
   {path: '**', redirectTo: 'account', pathMatch: 'full'},
 

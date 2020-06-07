@@ -100,6 +100,7 @@ export class CreateAccountComponent implements OnInit {
     this.transaction.currency = this.senderAccount.currency;
     this.transaction.userId = this.userId;
     this.accountService.setTransactionFirst(this.transaction);
+    window.location.reload();
 
 
   }

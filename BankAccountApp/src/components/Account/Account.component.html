@@ -5,8 +5,8 @@
   <button (click)="createAccount()" class="btn btn-success">Create</button>
 </div>
 <br>
-<div class="container">
-  <h2 class="info" *ngIf="accounts">My accounts</h2>
+<div  *ngIf="accounts" class="container">
+  <h2 class="info" >My accounts</h2>
   <div *ngIf="accounts" class="container">
     <div class="row">
       <div *ngFor="let account of accounts" class="col-md-4">
