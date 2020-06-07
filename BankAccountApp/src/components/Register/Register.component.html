@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center h-100">
     <div class="user_card">
       <div class="d-flex justify-content-center">
-        <h3>Register bank account</h3>
+        <h3>{{'registerText' | translate }}</h3>
       </div>
       <div class="d-flex justify-content-center form_container">
         <form (ngSubmit)="saveUser()" [formGroup]="registerForm">
@@ -10,26 +10,26 @@
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
-            <input type="text" formControlName="firstName" class="form-control input_user" value="" placeholder=" first name">
+            <input type="text" formControlName="firstName" class="form-control input_user" value="" placeholder=" {{'firstName' | translate }}">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
-            <input type="text" formControlName="lastName" class="form-control input_user" value="" placeholder="last name">
+            <input type="text" formControlName="lastName" class="form-control input_user" value="" placeholder="{{'lastName' | translate }}">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
-            <input type="text" formControlName="userName" class="form-control input_user" value="" placeholder="username">
+            <input type="text" formControlName="userName" class="form-control input_user" value="" placeholder="{{'username' | translate }}">
           </div>
           <div class="alert alert-danger" *ngIf="registerForm.get('userName').hasError('required') && registerForm.get('userName').dirty">userName is required</div>
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-key"></i></span>
             </div>
-            <input  [minlength]="6" type="password" formControlName="password" class="form-control input_pass" value="" placeholder="password">
+            <input  [minlength]="6" type="password" formControlName="password" class="form-control input_pass" value="" placeholder="{{'password' | translate }}">
           </div>
           <div class="alert alert-danger" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').dirty">Password is required</div>
           <div class="alert alert-danger" *ngIf="registerForm.get('password').hasError('minlength')">Password must be at least 6 characters</div>
@@ -38,13 +38,13 @@
           <div class="input-group-append">
             <span class="input-group-text"><i class="fas fa-key"></i></span>
           </div>
-          <input  type="password" formControlName="confirmPassword" class="form-control input_pass" value="" placeholder="confirmPassword">
+          <input  type="password" formControlName="confirmPassword" class="form-control input_pass" value="" placeholder="{{'confirmPassword' | translate }}">
         </div>
         <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').dirty">Password is required</div>
         <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword').hasError('confirmedValidator')">Password and Confirm Password must be match</div>
      
             <div class="d-flex justify-content-center mt-3 login_container">
-         <button type="button" name="button" type="submit" [disabled]="!registerForm.valid" class="btn login_btn">Register</button>
+         <button type="button" name="button" type="submit" [disabled]="!registerForm.valid" class="btn login_btn">{{'Register' | translate }}</button>
          </div>
         </form>
       </div>
@@ -52,7 +52,7 @@
   </div>
   <div class="mt-4">
     <div class="d-flex justify-content-center links">
-       have an account please log in <a routerLink="/login" class="ml-2">login</a>
+       have an account please log in <a routerLink="/login" class="ml-2">{{'Login' | translate }}</a>
     </div>
   </div>
 </div>

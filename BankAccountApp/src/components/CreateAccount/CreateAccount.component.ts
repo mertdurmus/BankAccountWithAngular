@@ -6,6 +6,7 @@ import { AccountService } from 'src/services/Account.service';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyService } from 'src/services/Currency.service';
 import { Transaction } from 'src/models/transaction';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-CreateAccount',
@@ -30,16 +31,19 @@ export class CreateAccountComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private accountService: AccountService,
-              private currencyService: CurrencyService) { }
+              private currencyService: CurrencyService,
+              private router: Router) { }
 
   ngOnInit() {
     this.userId = localStorage.getItem(AUTHENTICATED_USER);
     this.accountService.getAllAccount().then(value => {
-      if (value.length === 0) {
+      if (value == null) {
         this.firstAccountCheck = true;
+        console.log(' this.firstAccountCheck', this.firstAccountCheck);
 
       } else {
         this.firstAccountCheck = false;
+        console.log(' this.firstAccountCheck', this.firstAccountCheck);
       }
     });
     this.createForm();
@@ -101,8 +105,7 @@ export class CreateAccountComponent implements OnInit {
     this.transaction.userId = this.userId;
     this.accountService.setTransactionFirst(this.transaction);
     window.location.reload();
-
-
+   // setTimeout(() => { this.router.navigateByUrl('account'); } , 1000);
   }
 
 

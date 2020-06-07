@@ -397,7 +397,7 @@
   <html>
     <body>
       <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" router-link="#" routerLinkActive="active">Bank Account App</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" router-link="#" routerLinkActive="active">{{ 'title' | translate}}</a>
         <a>USDTRY: {{USDTRY}}</a>
         <a>EURTRY: {{EURTRY}}</a>
         <a>XAUTRY: {{XAUTRY}}</a>
@@ -405,7 +405,7 @@
 
           <li class="nav-item text-nowrap">
               <button *ngIf="!isUserLogged"class="btn btn-sm btn-warning" (click)="login()">
-                Log in
+                {{ 'Login' | translate}} 
               </button>
           </li>
         </ul>
@@ -418,33 +418,45 @@
               <ul class="nav flex-column">
                 <li class="nav-item">
                   <a class="nav-link active" routerLink="account" (click)="refreh() "routerLinkActive="active">
-                    Accounts   {{numbersOfAccount}}
+                     {{ 'Accounts' | translate}}   {{numbersOfAccount}}
                   </a> <span class="sr-only">(current)</span>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" routerLink="getTransaction" routerLinkActive="active">
                     <span data-feather="file"></span>
-                    Get Transaction
+                     {{ 'Get Transaction' | translate}}
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" routerLink="transfers" routerLinkActive="active">
                     <span data-feather="file"></span>
-                    Show My Transfers
+                     {{ 'Show My Transfers' | translate}}
                   </a>
                 </li>
                 <li  *ngIf="isUserLogged" class="nav-item">
                   <button class="btn btn-sm btn-warning" (click)="logOut()">
-                    Log out
+                    {{ 'Log out' | translate}}
                   </button>
                 </li>
                 <br>
                 <li class="nav-item">
                   <button class="btn btn-sm btn-warning" (click)="refresh()">
-                    REFRESH CURRENCY
+                     {{ 'REFRESH CURRENCY' | translate}}
                   </button>
                 </li>
               </ul>
+              <span class="form-inline">
+                <select 
+                    class="form-control" 
+                    #selectedLang 
+                    (change)="switchLang(selectedLang.value)">
+                  <option *ngFor="let language of translate.getLangs()" 
+                    [value]="language"
+                    [selected]="language === translate.currentLang">
+                    {{ language }}
+                  </option>
+                </select>
+              </span>
             </div>
           </nav>
         </div>

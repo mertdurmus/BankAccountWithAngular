@@ -14,7 +14,7 @@ import { MainComponent } from 'src/components/Main/Main.component';
 import { CreateAccountComponent } from 'src/components/CreateAccount/CreateAccount.component';
 import { GetTransactionComponent } from 'src/components/getTransaction/getTransaction.component';
 import { CurrencyService } from 'src/services/Currency.service';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { ColorDirective } from './directives/color.directive';
 import { CustomCurrencyPipe } from './pipes/currency.pipe';
 import { CurrencyPipe } from '@angular/common';
@@ -22,6 +22,8 @@ import { TransfersComponent } from 'src/components/Transfers/Transfers.component
 import { FilterPipe } from './pipes/filter.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from 'src/services/Account.service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 
@@ -48,10 +50,23 @@ import { AccountService } from 'src/services/Account.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
 
   ],
   providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe, AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+// AOT compilation support
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

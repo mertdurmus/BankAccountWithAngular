@@ -20,6 +20,8 @@
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
+    "@ngx-translate/core": "^12.1.2",
+    "@ngx-translate/http-loader": "^4.0.0",
     "alertifyjs": "^1.13.1",
     "bootstrap": "^4.5.0",
     "dexie": "^3.0.1",

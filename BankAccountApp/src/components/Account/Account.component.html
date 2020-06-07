@@ -4,56 +4,55 @@
   </h2>
   <button (click)="createAccount()" class="btn btn-success">Create</button>
 </div>
-<br>
-<div  *ngIf="accounts" class="container">
-  <h2 class="info" >My accounts</h2>
-  <div *ngIf="accounts" class="container">
-    <div class="row">
-      <div *ngFor="let account of accounts" class="col-md-4">
-        <div id="item" class="card mb-4 box-shadow mt-4 pt-3">
-          <div class="card-body">
-            <h3>Account name: {{ account.name }}</h3>
-            <p class="card-text">
-             Account Value: {{ account.amount }}
-            </p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button
-                  type="button"
-                  routerLink="/accountDetail/{{ account.accountId }}"
-                  class="btn btn-sm btn-outline-secondary"
-                >
-                  View detail of account
-                </button>
-              </div>
-              <p class="card-text">
-                <small class="text-muted">Account type: {{ account.currency }}</small>
-              </p>
+<br />
+<div *ngIf="accounts" class="container">
+    <h2 class="info">My accounts</h2>
+  <div class="row">
+    <div *ngFor="let account of accounts" class="col-md-4">
+      <div id="item" class="card mb-4 box-shadow mt-4 pt-3">
+        <div class="card-body">
+          <h3>Account name: {{ account.name }}</h3>
+          <p class="card-text">Account Value: {{ account.amount }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button
+                type="button"
+                routerLink="/accountDetail/{{ account.accountId }}"
+                class="btn btn-sm btn-outline-secondary"
+              >
+                View detail of account
+              </button>
             </div>
+            <p class="card-text">
+              <small class="text-muted"
+                >Account type: {{ account.currency }}</small
+              >
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <div *ngIf="transactionLastTen" class="container">
   <h2 class="info">Recent Events</h2>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Description</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Currency</th>
-      <th scope="col">Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let t of transactionLastTen ">
-      <th scope="row">{{t.description}}</th>
-      <td>{{t.amount}}</td>
-      <td>{{t.currency}}</td>
-      <td>{{t.actionDate}}</td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transactionLastTen">
+        <th scope="row">{{ t.description }}</th>
+        <td>{{ t.amount }}</td>
+        <td>{{ t.currency }}</td>
+        <td>{{ t.actionDate }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

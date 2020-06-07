@@ -33,15 +33,20 @@ export class AccountComponent implements OnInit {
 
   getAccounts(){
       this.accountService.getAllAccount().then(value => {
-      this.accounts = value;
-      console.log(this.accounts);
+        if (value != null){
+          this.accounts = value;
+          console.log(this.accounts);
+        }
+
     });
   }
 
   getLastEvent(){
     this.accountService.getLastEvent().then(value => {
       this.transaction = value;
-      setTimeout(() => {this.assign(); }, 300);
+      if (this.transaction){
+        setTimeout(() => {this.assign(); }, 300);
+      }
     });
   }
 

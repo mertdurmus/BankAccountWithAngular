@@ -1,0 +1,29 @@
+{
+    "title": "Bank Account App",
+    "Name": "Name",
+    "Login": "Login",
+    "Register": "Register",
+    "NameError": "I am sure you must have a name!",
+    "Email": "Email address",
+    "PhoneNo": "Phone No",
+    "Password": "Password",
+    "Bio": "Enter bio",
+    "TermsConditions": "I agree to terms and conditions.",
+    "Submit": "Submit",
+    "Accounts": "Accounts",
+    "Get Transaction": "Get Transaction",
+    "Show My Transfers": "Show My Transfers",
+    "Log out": "Log out",
+    "REFRESH CURRENCY ": "REFRESH CURRENCY ",
+    "username": "username",
+    "password": "password",
+    "loginHeader": "Login your bank account",
+    "noAccount":"Don't have an account?",
+    "firstName":"First Name",
+    "lastName":"Last Name",
+    "registerText":"Register bank account",
+    "confirmPassword": "confirmPassword"
+
+    
+
+}

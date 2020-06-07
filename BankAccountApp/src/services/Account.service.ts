@@ -115,23 +115,41 @@ async getLastEvent(): Promise<Transaction[]> {
   const userId = localStorage.getItem(AUTHENTICATED_USER);
   // tslint:disable-next-line:max-line-length
   const allItems: Transaction[] = await this.db.transactions.where('userId').equals(userId).reverse().sortBy('actionDate'); // .sortBy('actionDate')
-  return allItems;
+  if (allItems[0]) {
+    return allItems;
+  }else{
+    console.log('No Transaction');
+  }
 }
 
 async getAllAccount(): Promise<Account[]> {
   const userId = localStorage.getItem(AUTHENTICATED_USER_ID);
   const allItems: Account[] = await this.db.accounts.where('userId').equals(userId).toArray();
-  return allItems;
+  if (allItems[0]) {
+    return allItems;
+  }else{
+    return null;
+    this.alertifyService.warning('you are new client welcome! please open a account');
+  }
+ 
 }
 
 async getAllSend(accountId: number): Promise<Transaction[]> {
   const allItems: Transaction[] = await this.db.transactions.where('senderId').equals(accountId).toArray();
-  return allItems;
+  if (allItems[0]) {
+    return allItems;
+  }else{
+    console.log('No Transaction');
+  }
 }
 
 async getAllReceive(accountId: number): Promise<Transaction[]> {
   const allItems: Transaction[] = await this.db.transactions.where('receiverId').equals(accountId).toArray();
-  return allItems;
+  if (allItems[0]) {
+    return allItems;
+  }else{
+    console.log('No Transaction');
+  }
 }
 
 async getAccountById(accntId) {

@@ -5,6 +5,7 @@ import { CurrencyService } from 'src/services/Currency.service';
 import * as _ from 'lodash';
 import { AccountService } from 'src/services/Account.service';
 import { async } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-Main',
@@ -14,21 +15,23 @@ import { async } from '@angular/core/testing';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class MainComponent implements OnInit {
-  constructor(private authService: AuthService,
-              private router: Router,
-              private currencyService: CurrencyService,
-              private accountService: AccountService,
-              private ref: ChangeDetectorRef) {
+  
+    constructor(private authService: AuthService,
+                private router: Router,
+                private currencyService: CurrencyService,
+                private accountService: AccountService,
+                public translate: TranslateService,
+                private ref: ChangeDetectorRef) {
+                setInterval(() => {
+                     this.accountService.accntNumber.subscribe(
+                        {
+                            next: (v) => this.numbersOfAccount = v
+                        });
+                     this.ref.markForCheck(); }, 1000);
 
-    setInterval(() => {
-      this.accountService.accntNumber.subscribe(
-        {
-          next: (v) => this.numbersOfAccount = v
-        }
-      );
-      this.ref.markForCheck();
-    }, 1000);
-  }
+                translate.addLangs(['en', 'tr']);
+                translate.setDefaultLang('en');
+    }
 
   isUserLogged = false;
 
@@ -38,8 +41,11 @@ export class MainComponent implements OnInit {
   USDTRY: number;
   EURTRY: number;
   XAUTRY: number;
+  title = ' Bank Account App';
 
-
+  switchLang(lang: string) {
+    this.translate.use(lang);
+  }
 
   logOut() {
     this.authService.logOut();
