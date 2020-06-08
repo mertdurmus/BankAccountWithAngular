@@ -25,6 +25,7 @@ export class GetTransactionComponent implements OnInit {
   choose = false;
   userId;
   showList = false;
+  firstOpen;
 
   constructor(private activatedRoute: ActivatedRoute,
               private accountService: AccountService,
@@ -42,10 +43,11 @@ export class GetTransactionComponent implements OnInit {
         this.setVirman(params['virman']);
       }
     });
-
+    this.getAccounts();
+  //  setTimeout(() => { }, 50);
     this.createForm();
     this.currencyService.refresh();
-    this.getAccounts();
+
   }
 
   setVirman(virman){
@@ -104,7 +106,12 @@ export class GetTransactionComponent implements OnInit {
   getAccounts() {
     this.accountService.getAllAccount().then(value => {
       this.myAccounts = value;
-   //   console.log(this.accounts);
+      console.log('this.myaccount', this.myAccounts);
+      if(this.myAccounts !== null){
+        this.firstOpen = false;
+      }else{
+        this.firstOpen = true;
+      }
     });
   }
 

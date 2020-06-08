@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/services/Account.service';
 import { Transaction } from 'src/models/transaction';
+import { AlertifyService } from 'src/services/Alertify.service';
 
 
 
@@ -12,11 +13,11 @@ import { Transaction } from 'src/models/transaction';
 })
 export class TransfersComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private alertifyService: AlertifyService) { }
 // , private filterTablePipe: FilterTablePipe
   transaction: Transaction[];
   filterText = '';
-  amountText = 0;
+  amountText: number;
   currencyText = '';
   dateText = '';
   page = 1;
@@ -30,7 +31,12 @@ export class TransfersComponent implements OnInit {
   getLastEvent(){
     this.accountService.getLastEvent().then(value => {
       this.transaction = value;
-      setTimeout(() => {this.collectionSize = this.transaction.length; this.transactions(); }, 200);
+      if(this.transaction !== undefined){
+        setTimeout(() => {this.collectionSize = this.transaction.length; this.transactions(); }, 200);
+      }else{
+        this.alertifyService.warning('there is no transaction');
+      }
+      
     });
   }
 

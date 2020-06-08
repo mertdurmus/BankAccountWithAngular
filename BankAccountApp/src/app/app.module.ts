@@ -24,6 +24,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from 'src/services/Account.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CreateAccountModalComponent } from 'src/components/CreateAccountModal/CreateAccountModal.component';
 
 
 
@@ -38,6 +39,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     MainComponent,
     CreateAccountComponent,
     GetTransactionComponent,
+    CreateAccountModalComponent,
     ColorDirective,
     CustomCurrencyPipe,
     TransfersComponent,
@@ -59,6 +61,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
       }
     })
 
+  ],
+  entryComponents:[
+    CreateAccountModalComponent
   ],
   providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe, AccountService],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
-<div  *ngIf="!choose" class="container">
-  <div class="col align-self-center">
+<div *ngIf="!firstOpen; else noAccount">
+  <div *ngIf="!choose" class="container">
+    <div class="col align-self-center">
       <h3>Please choose your action</h3>
-  </div>
+    </div>
     <div class="col align-self-center">
       <a routerLink="/getTransaction/virman/{{ userId }}"
         ><button class="btn btn-warning">virman</button></a
@@ -12,98 +13,111 @@
         </button></a
       >
     </div>
-  <br />
-  <div class="col align-self-center">
-  <h2 *ngIf="showList">select the account to be transferred</h2>
+    <br />
+    <div class="col align-self-center">
+      <h2 *ngIf="showList">select the account to be transferred</h2>
+    </div>
+    <div class="col align-self-center">
+      <ul *ngIf="showList" class="list-group">
+        <a
+          routerLink="/getTransaction/{{ account.accountId }}"
+          *ngFor="let account of myAccounts"
+          class="list-group-item list-group-item-action"
+          >{{ account.name }}</a
+        >
+      </ul>
+    </div>
   </div>
-  <div class="col align-self-center">
-  <ul *ngIf="showList" class="list-group">
-    <a
-      routerLink="/getTransaction/{{ account.accountId }}"
-      *ngFor="let account of myAccounts"
-      class="list-group-item list-group-item-action"
-      >{{ account.name }}</a
-    >
-  </ul>
-  </div>
-</div>
 
-<div *ngIf="choose" class="jumbotron">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <form [formGroup]="transactionForm">
-          <div *ngIf="virman">
-            <label>Account to which the money will be transferred</label>
-            <select
-              [(ngModel)]="senderAccountId"
-              [ngModelOptions]="{ standalone: true }"
-            >
-              <option
-                *ngFor="let account of myAccounts"
-                [value]="account.accountId"
+  <div *ngIf="choose" class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <form [formGroup]="transactionForm">
+            <div *ngIf="virman">
+              <label>Account to which the money will be transferred</label>
+              <select
+                [(ngModel)]="senderAccountId"
+                [ngModelOptions]="{ standalone: true }"
               >
-                account name->>> {{ account.name }}: amount->>>>
-                {{ account.amount | currency: account.currency}}
-              </option>
-            </select>
-          </div>
-          <div *ngIf="virman">
-            <label>Receiver account number</label>
-            <br>
-            <select
-              [(ngModel)]="receiverId"
-              [ngModelOptions]="{ standalone: true }"
-            >
-              <option
-                *ngFor="let account of myAccounts"
-                [value]="account.accountId"
+                <option
+                  *ngFor="let account of myAccounts"
+                  [value]="account.accountId"
+                >
+                  account name->>> {{ account.name }}: amount->>>>
+                  {{ account.amount | currency: account.currency }}
+                </option>
+              </select>
+            </div>
+            <div *ngIf="virman">
+              <label>Receiver account number</label>
+              <br />
+              <select
+                [(ngModel)]="receiverId"
+                [ngModelOptions]="{ standalone: true }"
               >
-                account name->>> {{ account.name }}: amount->>>>
-                {{ account.amount | currency: account.currency }}
-              </option>
-            </select>
-          </div>
-          <div *ngIf="!virman" class="form-group">
-            <label>Receiver Account Number</label>
-            <input
-              type="text"
-              formControlName="receiverId"
-              class="form-control"
-            />
-          </div>
-          <div class="form-group">
-            <label>Amount</label>
-            <input
-              type="number"
-              formControlName="amount"
-              class="form-control"
-            />
-          </div>
-          <div class="form-group">
-            <label>Description</label>
-            <input
-              type="text"
-              formControlName="description"
-              class="form-control"
-            />
-          </div>
-          <div *ngIf="!virman" class="form-group">
-            <button type="submit" (click)="onSubmit()" class="btn btn-primary">
-              Send Money
-            </button>
-          </div>
-          <div *ngIf="virman" class="form-group">
-            <button
-              type="submit"
-              (click)="onSubmitVirman()"
-              class="btn btn-primary"
-            >
-              Send Money
-            </button>
-          </div>
-        </form>
+                <option
+                  *ngFor="let account of myAccounts"
+                  [value]="account.accountId"
+                >
+                  account name->>> {{ account.name }}: amount->>>>
+                  {{ account.amount | currency: account.currency }}
+                </option>
+              </select>
+            </div>
+            <div *ngIf="!virman" class="form-group">
+              <label>Receiver Account Number</label>
+              <input
+                type="text"
+                formControlName="receiverId"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label>Amount</label>
+              <input
+                type="number"
+                formControlName="amount"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input
+                type="text"
+                formControlName="description"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="!virman" class="form-group">
+              <button
+                type="submit"
+                (click)="onSubmit()"
+                class="btn btn-primary"
+              >
+                Send Money
+              </button>
+            </div>
+            <div *ngIf="virman" class="form-group">
+              <button
+                type="submit"
+                (click)="onSubmitVirman()"
+                class="btn btn-primary"
+              >
+                Send Money
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noAccount>
+  <div>
+    <h3 style="text-align: center; background-color: aqua;">
+      You dont have any Account
+    </h3>
+  </div>
+</ng-template>

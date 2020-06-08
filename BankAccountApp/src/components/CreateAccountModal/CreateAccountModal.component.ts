@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Account } from 'src/models/account';
 import { AuthService, AUTHENTICATED_USER_ID, AUTHENTICATED_USER } from 'src/services/Auth.service';
@@ -8,14 +9,12 @@ import { CurrencyService } from 'src/services/Currency.service';
 import { Transaction } from 'src/models/transaction';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-CreateAccount',
-  templateUrl: './CreateAccount.component.html',
-  styleUrls: ['./CreateAccount.component.css'],
-  providers: [AuthService, AccountService]
+  selector: 'app-CreateAccountModal',
+  templateUrl: './CreateAccountModal.component.html',
+  styleUrls: ['./CreateAccountModal.component.css']
 })
-export class CreateAccountComponent implements OnInit {
+export class CreateAccountModalComponent implements OnInit {
 
   accountForm: FormGroup;
   account: Account;
@@ -33,7 +32,8 @@ export class CreateAccountComponent implements OnInit {
               private authService: AuthService,
               private accountService: AccountService,
               private currencyService: CurrencyService,
-              private router: Router) { }
+              private router: Router,
+              public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     this.userId = localStorage.getItem(AUTHENTICATED_USER);

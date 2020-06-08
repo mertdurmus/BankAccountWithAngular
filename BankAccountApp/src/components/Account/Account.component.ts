@@ -4,6 +4,8 @@ import { AccountService } from 'src/services/Account.service';
 import { AuthService } from 'src/services/Auth.service';
 import { Account } from 'src/models/account';
 import { Transaction } from 'src/models/transaction';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateAccountModalComponent } from '../CreateAccountModal/CreateAccountModal.component';
 
 @Component({
   selector: 'app-Account',
@@ -19,7 +21,8 @@ export class AccountComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
-              private accountService: AccountService) { }
+              private accountService: AccountService,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
     this.getLastEvent();
@@ -53,5 +56,10 @@ export class AccountComponent implements OnInit {
   assign(){
     this.transactionLastTen = this.transaction.slice(0, 10);
     console.log(this.transactionLastTen);
+  }
+
+  open() {
+    const modalRef = this.modalService.open(CreateAccountModalComponent);
+
   }
 }
