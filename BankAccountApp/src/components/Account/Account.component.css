@@ -1,3 +1,12 @@
 .info {
     text-align: center;
 }
+
+.card{
+    background-color: cornsilk;
+    width: 22rem;
+    height: 13rem;
+    margin: auto;
+    padding: 0%;
+
+}

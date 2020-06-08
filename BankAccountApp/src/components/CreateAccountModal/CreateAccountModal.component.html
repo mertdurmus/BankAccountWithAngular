@@ -9,17 +9,22 @@
             <label>Account name</label>
             <input type="text" formControlName="name" class="form-control" />
           </div>
+          <div class="alert alert-danger" *ngIf="accountForm.get('name').hasError('required') && accountForm.get('name').dirty">Name is required</div>
           <div *ngIf="!firstAccountCheck" class="form-group">
             <label>Amount</label>
             <input type="text" formControlName="amount" class="form-control" />
           </div>
+          <div class="alert alert-danger" *ngIf="accountForm.get('amount').hasError('required') && accountForm.get('amount').dirty">Amount is required</div>
           <div *ngIf="!firstAccountCheck">
             <label>Account to which the money will be transferred</label>
             <select
+            required
+              id="senderAccountId" name="senderAccountId"
+              class="form-control"
               [(ngModel)]="senderAccountId"
               [ngModelOptions]="{ standalone: true }"
             >
-              <option *ngFor="let account of accounts" [value]="account.accountId">
+              <option required  *ngFor="let account of accounts" [value]="account.accountId">
                 account name-> {{ account.name }}: amount->
                 {{ account.amount }}
               </option>
@@ -44,13 +49,14 @@
               <option  value="XAU">altın</option>
             </select>
           </div>
+          <div class="alert alert-danger" *ngIf="accountForm.get('currency').hasError('required') && accountForm.get('currency').dirty">currency is required</div>
           <div *ngIf="!firstAccountCheck" class="form-group">
-            <button (click)=onSubmit() class="btn btn-primary">
+            <button [disabled]="!accountForm.valid" (click)=onSubmit() class="btn btn-primary">
               Create Account
             </button>
           </div>
           <div *ngIf="firstAccountCheck" class="form-group">
-            <button (click)=onSubmitFirst() class="btn btn-primary">
+            <button  [disabled]="!accountForm.valid" (click)=onSubmitFirst() class="btn btn-primary">
               Create first Account
             </button>
           </div>

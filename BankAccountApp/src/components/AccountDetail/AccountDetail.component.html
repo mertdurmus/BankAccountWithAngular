@@ -3,22 +3,23 @@
   <p class="lead">{{account.amount | currency: account.currency}}</p>
   <hr class="my-4">
   <p class="lead">
-    <a class="btn btn-primary btn-lg" routerLink="/getTransaction/{{account.accountId}}" role="button">Do Transaction</a>
+    <a class="btn btn-primary btn-lg" routerLink="/getTransaction/{{account.accountId}}" role="button">{{'DoTransaction' | translate }}</a>
   </p>
   <p class="lead">
-   <button class="btn btn-primary" (click)=showTransaction()>Show My Transactions</button>
+   <button class="btn btn-primary" (click)=showTransaction()>{{'ShowMyTransactions' | translate }}</button>
   </p>
 </div>
 
 <table id="myTable" *ngIf="allSend || allReceive" class="table">
   <thead  class="thead-dark">
     <tr  >
-      <th scope="col">TransactionDate</th>
-      <th scope="col">AMOUNT</th>
-      <th scope="col">SENDER ACCOUNT</th>
-      <th scope="col">RECEIVER ACCOUNT</th>
-      <th scope="col">CURRENCY</th>
-      <th scope="col">DESCRIPTION</th>
+      <th scope="col">{{'TransactionDate' | translate }}</th>
+      <th scope="col">{{'Amount' | translate }}</th>
+      <th scope="col">{{'SenderAccount' | translate }}</th>
+      <th scope="col">{{'ReceiverAccount' | translate }}</th>
+      <th scope="col">{{'Currency' | translate }}</th>
+      <th scope="col">{{'Description' | translate }}</th>
+      <th scope="col">{{'FinalBalance' | translate }}</th>
     </tr>
   </thead>
   <tbody>
@@ -29,6 +30,7 @@
       <td>{{send.receiverId}}</td>
       <td>{{send.currency}}</td>
       <td>{{send.description}}</td>
+      <td>{{send.senderLastValue}}</td>
     </tr>
     <tr *ngFor="let receive of allReceive">
       <th scope="row">{{receive.actionDate | date:'short'}}</th>
@@ -37,6 +39,7 @@
       <td>{{account.name}}</td>
       <td>{{receive.currency}}</td>
       <td>{{receive.description}}</td>
+      <td>{{receive.receiverLastValue}}</td>
     </tr>
   </tbody>
 </table>

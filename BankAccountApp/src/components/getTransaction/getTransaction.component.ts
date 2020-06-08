@@ -32,6 +32,8 @@ export class GetTransactionComponent implements OnInit {
               private formBuilder: FormBuilder,
               private currencyService: CurrencyService) { }
 
+
+
   ngOnInit() {
     this.userId = localStorage.getItem(AUTHENTICATED_USER);
     this.activatedRoute.params.subscribe(params => {
@@ -44,16 +46,20 @@ export class GetTransactionComponent implements OnInit {
       }
     });
     this.getAccounts();
-  //  setTimeout(() => { }, 50);
     this.createForm();
     this.currencyService.refresh();
 
   }
 
+
+
+
   setVirman(virman){
     this.choose = true;
     this.virman = true;
   }
+
+
 
   getAccountIdById(accountId){
     this.choose = true;
@@ -66,6 +72,9 @@ export class GetTransactionComponent implements OnInit {
     });
 
   }
+
+
+
   createForm() {
     this.transactionForm = this.formBuilder.group({
       receiverId: ['', Validators.required],
@@ -73,6 +82,9 @@ export class GetTransactionComponent implements OnInit {
       description: ['', Validators.required],
     });
   }
+
+
+
   onSubmit(){
     this.transaction = Object.assign({}, this.transactionForm.value);
     this.transaction.senderId = this.senderAccountId;
@@ -83,6 +95,8 @@ export class GetTransactionComponent implements OnInit {
     this.transaction.currency = this.account.currency;
     this.accountService.setTransaction(this.transaction);
   }
+
+
 
   onSubmitVirman(){
     this.transaction = Object.assign({}, this.transactionForm.value);

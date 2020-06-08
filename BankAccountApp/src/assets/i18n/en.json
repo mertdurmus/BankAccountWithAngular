@@ -22,7 +22,20 @@
     "firstName":"First Name",
     "lastName":"Last Name",
     "registerText":"Register bank account",
-    "confirmPassword": "confirmPassword"
+    "confirmPassword": "confirmPassword",
+    "Amount":"Amount",
+    "SenderAccount": "Sender Account",
+    "ReceiverAccount":"Receiver Account",
+    "Currency": "Currency",
+    "Description":"Description",
+    "FinalBalance":"Final Balance",
+    "ShowMyTransactions":"Show My Transactions",
+    "DoTransaction":"Do Transaction",
+    "TransactionDate":"Transaction Date",
+    "AllTransfers":"All Transfers",
+    "Create":"Create a New Account",
+    "MyAccounts":"My Accounts",
+    "RecentEvents":"Recent Events"
 
     
 

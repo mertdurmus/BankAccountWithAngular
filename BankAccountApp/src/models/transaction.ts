@@ -8,4 +8,6 @@ export class Transaction{
     amount: number;
     description: string;
     userId: string;
+    senderLastValue: number;
+    receiverLastValue: number;
 }

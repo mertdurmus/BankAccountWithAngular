@@ -22,5 +22,18 @@
     "firstName":"Adınız",
     "lastName":"Soyadınız",
     "registerText":"Banka hesabı için kayıt oluşturun",
-    "confirmPassword": "şifre kontrol"
+    "confirmPassword": "şifre kontrol",
+    "Amount":"Miktar",
+    "SenderAccount": "Gönderici Hesabı",
+    "ReceiverAccount":"Alıcı Hesabı",
+    "Currency": "Para birimi",
+    "Description":"Açıklama",
+    "FinalBalance":"Son Bakiye",
+    "ShowMyTransactions":"İşlemlerimi Göster",
+    "DoTransaction":"Para Gönder",
+    "TransactionDate":"İşlem Tarihi",
+    "AllTransfers":"Tüm Geçmiş İşlemler",
+    "Create":"Yeni Hesap Aç",
+    "MyAccounts":"Hesaplarım",
+    "RecentEvents":"Geçmiş işlemlerim"
 }

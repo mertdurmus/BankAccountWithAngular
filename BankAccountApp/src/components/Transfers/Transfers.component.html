@@ -1,5 +1,5 @@
 <div *ngIf="transaction" class="container">
-  <h2 style="text-align: center;">All Transfers</h2>
+  <h2 style="text-align: center;">{{'AllTransfers' | translate }}</h2>
 
   <div class="container">
     <div class="row">
@@ -60,10 +60,10 @@
     <table id="transfer-table" class="table" data-filter-control="true">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Description</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Currency</th>
-          <th scope="col">Date</th>
+          <th scope="col">{{'Description' | translate }}</th>
+          <th scope="col">{{'Amount' | translate }}</th>
+          <th scope="col">{{'Currency' | translate }}</th>
+          <th scope="col">{{'TransactionDate' | translate }}</th>
         </tr>
       </thead>
       <tbody>

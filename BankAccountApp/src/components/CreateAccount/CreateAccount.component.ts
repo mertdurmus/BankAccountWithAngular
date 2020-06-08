@@ -27,7 +27,10 @@ export class CreateAccountComponent implements OnInit {
   senderAccount: Account;
   userId;
   transaction: Transaction = {actionDate: new Date(), transactionId: '0', senderId: 10,
-   receiverId: 10, description: 'init', amount: 0, senderName: 'init', currency: 'init', userId: 'init'};
+   receiverId: 10, description: 'init', amount: 0, senderName: 'init', currency:
+  'init', userId: 'init', senderLastValue: 0, receiverLastValue: 0};
+
+
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -52,6 +55,7 @@ export class CreateAccountComponent implements OnInit {
     this.getAccounts();
   }
 
+
   createForm() {
     this.accountForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -59,6 +63,8 @@ export class CreateAccountComponent implements OnInit {
       currency: ['', Validators.required],
     });
   }
+
+
   onSubmit() {
     this.account = Object.assign({}, this.accountForm.value);
     this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
@@ -106,7 +112,6 @@ export class CreateAccountComponent implements OnInit {
     this.transaction.userId = this.userId;
     this.accountService.setTransactionFirst(this.transaction);
     window.location.reload();
-   // setTimeout(() => { this.router.navigateByUrl('account'); } , 1000);
   }
 
 
