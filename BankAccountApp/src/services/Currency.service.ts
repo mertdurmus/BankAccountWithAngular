@@ -17,23 +17,16 @@ export class CurrencyService {
   XAUTRY: number;
 
 constructor(private http: HttpClient) {
- // this.createDatabase();
  }
 
-// set endpoint and your API key
 endpoint = 'convert';
-access_key = 'dde7f7a9252e9844ef11e15395df687c';
+accessKey = 'dde7f7a9252e9844ef11e15395df687c';
 baseURL = 'http://data.fixer.io/api/';
 private db: any;
-/*
-private createDatabase() {
-  this.db = new Dexie('MyCurrencyDatabase');
-  this.db.version(1).stores({ currency: ' name, value' });
-}
-*/
+
 currencySymbols() {
   return this.http.get(
-    this.baseURL + 'symbols?access_key=' + this.access_key
+    this.baseURL + 'symbols?access_key=' + this.accessKey
   ).subscribe(
     data => {
       this.symbol = data['symbols'];
@@ -51,7 +44,7 @@ currencySymbols() {
   );
 }
 currencyRate() {
-  return this.http.get(this.baseURL + 'latest?access_key=' + this.access_key).subscribe(
+  return this.http.get(this.baseURL + 'latest?access_key=' + this.accessKey).subscribe(
     data => {
       this.rate = data['rates'];
       this.rateKeys = Object.keys(this.rate);
@@ -62,7 +55,6 @@ currencyRate() {
           text: this.rate[this.rateKeys[i]]
         });
       }
-      console.log(data);
     },
     err => { }
   );
@@ -79,10 +71,8 @@ convert(fromX: string, toX: string, value: number): number {
     return rate.code === from;
   });
   let ratio = this.rates[toIndex].text / this.rates[fromIndex].text;
-  //  console.log('ratio: ', ratio.toString());
   let cal = ratio * amount;
 
-  console.log('cal: ', cal.toString());
   return cal;
 }
 
@@ -110,7 +100,6 @@ test(){
 
 getUsdTry(){
   this.test();
-  console.log(this.USDTRY);
   return this.USDTRY;
 }
 
@@ -119,7 +108,7 @@ getEurTry(){
 }
 
 getXauTry(){
-  return this.XAUTRY;
+  return (this.XAUTRY / 33.1);
 }
 
 refresh(){

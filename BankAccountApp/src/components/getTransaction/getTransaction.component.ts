@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrencyService } from 'src/services/Currency.service';
 import { Account } from 'src/models/account';
 import { AUTHENTICATED_USER } from 'src/services/Auth.service';
+import { AlertifyService } from 'src/services/Alertify.service';
 
 @Component({
   selector: 'app-getTransaction',
@@ -30,7 +31,8 @@ export class GetTransactionComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private accountService: AccountService,
               private formBuilder: FormBuilder,
-              private currencyService: CurrencyService) { }
+              private currencyService: CurrencyService,
+              private alertifyService: AlertifyService) { }
 
 
 
@@ -87,13 +89,18 @@ export class GetTransactionComponent implements OnInit {
 
   onSubmit(){
     this.transaction = Object.assign({}, this.transactionForm.value);
-    this.transaction.senderId = this.senderAccountId;
-    this.transaction.userId = this.userId;
-    this.transaction.transactionId = uuidv4();
-    this.transaction.actionDate = new Date();
-    this.transaction.senderName = this.account.name;
-    this.transaction.currency = this.account.currency;
-    this.accountService.setTransaction(this.transaction);
+    if (this.account.amount > this.transaction.amount){
+      this.transaction.senderId = this.senderAccountId;
+      this.transaction.userId = this.userId;
+      this.transaction.transactionId = uuidv4();
+      this.transaction.actionDate = new Date();
+      this.transaction.senderName = this.account.name;
+      this.transaction.currency = this.account.currency;
+      this.accountService.setTransaction(this.transaction);
+    }else{
+      this.alertifyService.warning('not enough money for sending');
+    }
+   
   }
 
 
@@ -107,14 +114,19 @@ export class GetTransactionComponent implements OnInit {
 
   }
   init(){
-    this.transaction.senderId = this.senderAccountId;
-    this.transaction.receiverId = this.receiverId;
-    this.transaction.transactionId = uuidv4();
-    this.transaction.userId = this.userId;
-    this.transaction.actionDate = new Date();
-    this.transaction.senderName = this.account.name;
-    this.transaction.currency = this.account.currency;
-    this.accountService.setTransaction(this.transaction);
+    if (this.account.amount > this.transaction.amount){
+      this.transaction.senderId = this.senderAccountId;
+      this.transaction.receiverId = this.receiverId;
+      this.transaction.transactionId = uuidv4();
+      this.transaction.userId = this.userId;
+      this.transaction.actionDate = new Date();
+      this.transaction.senderName = this.account.name;
+      this.transaction.currency = this.account.currency;
+      this.accountService.setTransaction(this.transaction);
+    }else{
+      this.alertifyService.warning('not enough money for sending');
+    }
+
   }
 
   getAccounts() {

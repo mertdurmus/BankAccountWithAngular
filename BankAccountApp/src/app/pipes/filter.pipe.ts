@@ -8,6 +8,8 @@ export class FilterPipe implements PipeTransform {
 
   transform(value: Transaction[], fiterText?: string, currencyText?: string, amountText?: number, dateText?: string): Transaction[] {
     fiterText = fiterText ? fiterText.toLocaleLowerCase() : null;
+    currencyText = currencyText ? currencyText.toLocaleLowerCase() : null;
+    dateText = dateText ? dateText.toLocaleLowerCase() : null;
     if (currencyText) {
       return currencyText ? value.filter((p: Transaction) =>
         p.currency.toLocaleLowerCase().indexOf(currencyText) !== -1

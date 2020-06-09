@@ -92,7 +92,11 @@ export class AccountService {
     let receiverAmount = receiverAccount.amount;
     const receiverCurrency = receiverAccount.currency;
     const curr = this.currencyService.convert(receiverCurrency, senderCurrency, 1);
-    receiverAmount = receiverAmount + (value / curr);
+    if (senderCurrency === 'XAU'){
+      receiverAmount = receiverAmount + (value / (curr * 33.1 ));
+    }else{
+      receiverAmount = receiverAmount + (value / curr);
+    }
     senderAmount = senderAmount - (value);
 
     this.db.transactions
@@ -204,8 +208,15 @@ export class AccountService {
     let senderAmount = senderAccount.amount;
     const receiverAccount: Account = await this.db.accounts.get({ accountId: receiver });
     let receiverAmount = receiverAccount.amount;
-    receiverAmount = receiverAmount + value;
-    senderAmount = senderAmount - value;
+    let receiverCurrency = receiverAccount.currency;
+    if(receiverCurrency === 'XAU'){
+      receiverAmount = receiverAmount + value;
+      senderAmount = senderAmount - (value / 33.1);
+    }else{
+      receiverAmount = receiverAmount + value;
+      senderAmount = senderAmount - value;
+    }
+
 
     this.db.transactions
       .add(transaction)

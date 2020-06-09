@@ -40,6 +40,9 @@ export class CreateAccountComponent implements OnInit {
               private router: Router,
               private alertifyService: AlertifyService) { }
 
+
+
+
   ngOnInit() {
     this.userId = localStorage.getItem(AUTHENTICATED_USER);
     this.accountService.getAllAccount().then(value => {
@@ -68,13 +71,23 @@ export class CreateAccountComponent implements OnInit {
 
 
   onSubmit() {
-    if (this.senderAccountId){
+    let amountCheck;
     this.account = Object.assign({}, this.accountForm.value);
-    this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
-    this.account.userId = this.id;
-    this.account.accountId = uuidv4();
-    this.accountService.addAccount(this.account);
-    this.transformation();
+    if (this.senderAccountId){
+    for(const a of this.accounts){
+      if(a.accountId === this.senderAccountId){
+        amountCheck = a.amount;
+      }
+    }
+    if (amountCheck >= this.account.amount){
+      this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
+      this.account.userId = this.id;
+      this.account.accountId = uuidv4();
+      this.accountService.addAccount(this.account);
+      this.transformation();
+    }else{
+      this.alertifyService.warning('not enough money on sender account');
+    }
     }else{
       this.alertifyService.error('you dont select sender account');
     }
