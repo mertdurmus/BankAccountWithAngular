@@ -12,12 +12,14 @@
             </div>
             <input type="text" formControlName="userName" class="form-control input_user" value="" placeholder="{{'username' | translate }}">
           </div>
+          <div class="alert alert-danger" *ngIf="loginForm.get('userName').hasError('required') && loginForm.get('userName').dirty">userName is required</div>
           <div class="input-group mb-2">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-key"></i></span>
             </div>
             <input type="password" formControlName="password"class="form-control input_pass" value="" placeholder="{{'password' | translate }}">
           </div>
+          <div class="alert alert-danger" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').dirty">password is required</div>
 
             <div class="d-flex justify-content-center mt-3 login_container">
          <button type="button" name="button" type="submit" [disabled]="!loginForm.valid" class="btn login_btn">{{'Login' | translate }}</button>

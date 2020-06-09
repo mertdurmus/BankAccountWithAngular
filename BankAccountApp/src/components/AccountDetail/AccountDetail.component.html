@@ -30,7 +30,7 @@
       <td>{{send.receiverId}}</td>
       <td>{{send.currency}}</td>
       <td>{{send.description}}</td>
-      <td>{{send.senderLastValue}}</td>
+      <td>{{send.senderLastValue | currency: account.currency}}</td>
     </tr>
     <tr *ngFor="let receive of allReceive">
       <th scope="row">{{receive.actionDate | date:'short'}}</th>
@@ -39,7 +39,7 @@
       <td>{{account.name}}</td>
       <td>{{receive.currency}}</td>
       <td>{{receive.description}}</td>
-      <td>{{receive.receiverLastValue}}</td>
+      <td>{{receive.receiverLastValue | currency: account.currency}}</td>
     </tr>
   </tbody>
 </table>

@@ -17,9 +17,11 @@ export const accountNumber = 'accountNumber';
 export class AccountService {
 
 
+
   constructor(private alertifyService: AlertifyService,
               private router: Router,
               private currencyService: CurrencyService) {
+
     // initialize behavior subject for account number
     this.createDatabase();
     this.nn = localStorage.getItem(accountNumber);
@@ -46,23 +48,36 @@ export class AccountService {
 
 
 
-  addAccount(account: Account) {
+ async addAccount(account: Account) {
     this.db.accounts
       .add(account)
       .then(async () => {
         this.alertifyService.success('account succesfully created');
-        const userId = localStorage.getItem(AUTHENTICATED_USER_ID);
-        const allItems: Account[] = await this.db.accounts.where('userId').equals(userId).toArray();
-        setTimeout(() => { localStorage.setItem(accountNumber, allItems.length.toString()); }, 100);
-        this.accntNumber.next(allItems.length);
+        this.updateAccountNumber();
       })
       .catch(e => {
         console.log('Error: ' + (e.stack || e));
         this.alertifyService.error('Err! account not created please try again');
       });
+      // account amount convert nmuber type
+    const thisAccount: Account = await this.db.accounts.get({ accountId: account.accountId });
+    const amountNumberType = thisAccount.amount - 0 ;
+    this.db.accounts.update(thisAccount, { amount: amountNumberType }).then(updated => {
+      if (updated) {
+        console.log('success');
+      } else {
+        console.log('err!');
+      }
+    });
+
   }
 
-
+   async updateAccountNumber(){
+    const userId = localStorage.getItem(AUTHENTICATED_USER_ID);
+    const allItems: Account[] = await this.db.accounts.where('userId').equals(userId).toArray();
+    this.accntNumber.next(allItems.length);
+    setTimeout(() => { localStorage.setItem(accountNumber, allItems.length.toString()); }, 25);
+  }
 
   async setTransaction(transaction: Transaction) {
 
@@ -107,6 +122,7 @@ export class AccountService {
     this.getUpdatedAccountAmount(sender, receiver, transId);
   }
 
+
   async getUpdatedAccountAmount(senderId: number, receiverId: number, transctionId: string) {
     const senderAccount: Account = await this.db.accounts.get({ accountId: senderId });
     const senderAmount = senderAccount.amount;
@@ -125,7 +141,12 @@ export class AccountService {
 
   async getLastEvent(): Promise<Transaction[]> {
     const userId = localStorage.getItem(AUTHENTICATED_USER);
-    const allItems: Transaction[] = await this.db.transactions.where('userId').equals(userId).reverse().sortBy('actionDate');
+    // tslint:disable-next-line:max-line-length
+    const allItems: Transaction[] = await this.db.transactions.where('userId').equals(userId).reverse().sortBy('actionDate').catch(
+      err => {
+      console.error(err.stack || err);
+      });
+
     if (allItems[0]) {
       return allItems;
     } else {
@@ -133,7 +154,9 @@ export class AccountService {
     }
   }
 
+
   async getAllAccount(): Promise<Account[]> {
+    this.updateAccountNumber();
     const userId = localStorage.getItem(AUTHENTICATED_USER_ID);
     const allItems: Account[] = await this.db.accounts.where('userId').equals(userId).toArray();
     if (allItems[0]) {
@@ -203,5 +226,5 @@ export class AccountService {
     });
     this.getUpdatedAccountAmount(sender, receiver, transId);
   }
-  }
+}
 

@@ -451,16 +451,18 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
+              <li style="text-indent: 10%;" *ngIf="username">
+                    {{username}}
+              </li>
               <li class="nav-item">
                 <a
-                  class="nav-link active"
+                  class="nav-link"
                   routerLink="account"
                   (click)="refreh()"
                   routerLinkActive="active"
                 >
-                  {{ "Accounts" | translate }} {{ numbersOfAccount }}
+                  {{ "Accounts" | translate }} <label *ngIf="numbersOfAccount">{{ numbersOfAccount }} </label>
                 </a>
-                <span class="sr-only">(current)</span>
               </li>
               <li class="nav-item">
                 <a
@@ -468,7 +470,6 @@
                   routerLink="getTransaction"
                   routerLinkActive="active"
                 >
-                  <span data-feather="file"></span>
                   {{ "Get Transaction" | translate }}
                 </a>
               </li>
@@ -478,17 +479,16 @@
                   routerLink="transfers"
                   routerLinkActive="active"
                 >
-                  <span data-feather="file"></span>
                   {{ "Show My Transfers" | translate }}
                 </a>
               </li>
-              <li *ngIf="isUserLogged" class="nav-item">
+              <li style="text-indent: 8%;" *ngIf="isUserLogged" class="nav-item">
                 <button class="btn btn-sm btn-warning" (click)="logOut()">
                   {{ "Log out" | translate }}
                 </button>
               </li>
               <br />
-              <li class="nav-item">
+              <li style="text-indent: 8%;" class="nav-item">
                 <button class="btn btn-sm btn-warning" (click)="refresh()">
                   {{ "REFRESH CURRENCY" | translate }}
                 </button>

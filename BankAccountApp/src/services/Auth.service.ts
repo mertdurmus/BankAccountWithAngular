@@ -19,7 +19,7 @@ export class AuthService {
   user1: User;
 
   constructor(private alertifyService: AlertifyService,
-    private router: Router, ) {
+              private router: Router, ) {
     this.createDatabase();
   }
 
@@ -52,14 +52,14 @@ export class AuthService {
         localStorage.setItem(AUTHENTICATED_USER, loginUser.userName);
         this.alertifyService.success('Succecfully Login');
         this.router.navigateByUrl('/account');
+        setTimeout(() => { window.location.reload(); }, 100);
+       
       } else {
         this.alertifyService.warning('password incorrect');
       }
     } else {
       this.alertifyService.error('username incorrect');
     }
-
-
   }
 
   isUserLoggedIn() {
@@ -77,13 +77,19 @@ export class AuthService {
 
   async setCurrentUserId() {
     const user = localStorage.getItem(AUTHENTICATED_USER);
-    console.log(user);
     const userDb = await this.db.users.where('userName').equals(user).toArray();
     localStorage.setItem(AUTHENTICATED_USER_ID, userDb[0].id);
 
   }
 
+async getUserNames(): Promise<string>{
+  const user = localStorage.getItem(AUTHENTICATED_USER);
+  const userDb = await this.db.users.where('userName').equals(user).toArray();
+  const firstName = userDb[0].firstName;
+  const lastName = userDb[0].lastName;
+  return firstName + ' ' + lastName;
 
+}
 
   private async sendItemsFromIndexedDb() {
     const allItems: User[] = await this.db.todos.toArray();

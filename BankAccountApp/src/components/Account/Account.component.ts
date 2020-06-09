@@ -25,9 +25,10 @@ export class AccountComponent implements OnInit {
               private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.getAccounts();
     this.getLastEvent();
     this.authService.setCurrentUserId();
-    this.getAccounts();
+
   }
 
   createAccount() {
@@ -36,11 +37,9 @@ export class AccountComponent implements OnInit {
 
   getAccounts(){
       this.accountService.getAllAccount().then(value => {
-        if (value != null){
-          this.accounts = value;
-          console.log(this.accounts);
+        if (value !== null){
+            this.accounts = value;
         }
-
     });
   }
 
@@ -48,18 +47,16 @@ export class AccountComponent implements OnInit {
     this.accountService.getLastEvent().then(value => {
       this.transaction = value;
       if (this.transaction){
-        setTimeout(() => {this.assign(); }, 300);
+        setTimeout(() => {this.assign(); }, 100);
       }
     });
   }
 
   assign(){
     this.transactionLastTen = this.transaction.slice(0, 10);
-    console.log(this.transactionLastTen);
   }
 
   open() {
     const modalRef = this.modalService.open(CreateAccountModalComponent);
-
   }
 }

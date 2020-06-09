@@ -8,11 +8,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrencyService } from 'src/services/Currency.service';
 import { Transaction } from 'src/models/transaction';
 import { Router } from '@angular/router';
+import { AlertifyService } from 'src/services/Alertify.service';
 
 @Component({
   selector: 'app-CreateAccountModal',
   templateUrl: './CreateAccountModal.component.html',
-  styleUrls: ['./CreateAccountModal.component.css']
+  styleUrls: ['./CreateAccountModal.component.css'],
+  providers: [AccountService]
 })
 export class CreateAccountModalComponent implements OnInit {
 
@@ -34,6 +36,7 @@ export class CreateAccountModalComponent implements OnInit {
               private accountService: AccountService,
               private currencyService: CurrencyService,
               private router: Router,
+              private alertifyService: AlertifyService,
               public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
@@ -60,13 +63,18 @@ export class CreateAccountModalComponent implements OnInit {
       currency: ['', Validators.required],
     });
   }
+
   onSubmit() {
+    if (this.senderAccountId){
     this.account = Object.assign({}, this.accountForm.value);
     this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
     this.account.userId = this.id;
     this.account.accountId = uuidv4();
     this.accountService.addAccount(this.account);
     this.transformation();
+    }else{
+      this.alertifyService.error('you dont select sender account');
+    }
   }
 
   onSubmitFirst() {

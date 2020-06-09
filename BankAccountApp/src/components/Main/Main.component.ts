@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-Main',
   templateUrl: './Main.component.html',
   styleUrls: ['./Main.component.css'],
-  providers: [AuthService],
+  providers: [AuthService, AccountService],
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class MainComponent implements OnInit {
@@ -42,6 +42,7 @@ export class MainComponent implements OnInit {
   EURTRY: number;
   XAUTRY: number;
   title = ' Bank Account App';
+  username;
 
   switchLang(lang: string) {
     this.translate.use(lang);
@@ -55,6 +56,13 @@ export class MainComponent implements OnInit {
   login() {
     this.router.navigateByUrl('/login');
     this.isUserLoggedIn();
+  }
+  getUserName(){
+    this.authService.getUserNames().then(value => {
+      if (value !== null){
+          this.username = value;
+      }
+  });
   }
 
   isUserLoggedIn() {
@@ -77,6 +85,7 @@ export class MainComponent implements OnInit {
     );
     console.log(this.numbersOfAccount);
     this.currencyService.refresh();
+    this.getUserName();
   }
 
   refresh() {

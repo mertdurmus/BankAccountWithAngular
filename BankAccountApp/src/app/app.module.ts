@@ -65,7 +65,7 @@ import { CreateAccountModalComponent } from 'src/components/CreateAccountModal/C
   entryComponents:[
     CreateAccountModalComponent
   ],
-  providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe, AccountService],
+  providers: [AlertifyService, RouteGuardService, CurrencyService, CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
