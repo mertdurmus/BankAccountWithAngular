@@ -451,7 +451,7 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <li style="text-indent: 10%;" *ngIf="username">
+              <li style="text-indent: 10%;" *ngIf="username && isUserLogged">
                     {{username}}
               </li>
               <li class="nav-item">
@@ -461,7 +461,7 @@
                   (click)="refreh()"
                   routerLinkActive="active"
                 >
-                  {{ "Accounts" | translate }} <label *ngIf="numbersOfAccount">{{ numbersOfAccount }} </label>
+                  {{ "Accounts" | translate }} <label *ngIf="numbersOfAccount && isUserLogged">{{ numbersOfAccount }} </label>
                 </a>
               </li>
               <li class="nav-item">

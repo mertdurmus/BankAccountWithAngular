@@ -12,7 +12,7 @@
             class="form-control"
             id="filterText"
           />
-          <p><small> Search in description</small></p>
+          <p><small>{{'SearchDescription' | translate }}</small></p>
         </div>
       </div>
       <div class="col">
@@ -24,7 +24,7 @@
             class="form-control"
             id="amountText"
           />
-          <p><small> Search in amount</small></p>
+          <p><small>{{'SearchAmount' | translate }}</small></p>
         </div>
       </div>
       <div class="col">
@@ -36,7 +36,7 @@
             class="form-control"
             id="currencyText"
           />
-          <p><small> Search in currency</small></p>
+          <p><small>{{'SearchCurrency' | translate }}</small></p>
         </div>
       </div>
       <div class="col">
@@ -48,7 +48,7 @@
             class="form-control"
             id="dateText"
           />
-          <p><small> Search in date</small></p>
+          <p><small>{{'SearchDate' | translate }}</small></p>
         </div>
       </div>
     </div>
@@ -83,8 +83,8 @@
   </ngb-pagination>
 
   <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-    <option [ngValue]="2">2 items per page</option>
-    <option [ngValue]="4">4 items per page</option>
-    <option [ngValue]="6">6 items per page</option>
+    <option [ngValue]="2">{{'PerPage2' | translate }}</option>
+    <option [ngValue]="5">{{'PerPage5' | translate }}</option>
+    <option [ngValue]="10">{{'PerPage10' | translate }}</option>
   </select>
 </div>

@@ -35,7 +35,20 @@
     "AllTransfers":"All Transfers",
     "Create":"Create a New Account",
     "MyAccounts":"My Accounts",
-    "RecentEvents":"Recent Events"
+    "RecentEvents":"Recent Events",
+    "SearchDate":" Search in date",
+    "SearchCurrency":" Search in currency",
+    "SearchAmount":" Search in amount",
+    "SearchDescription":" Search in description",
+    "PerPage2":"2 items per page",
+    "PerPage5":"5 items per page",
+    "PerPage10":"10 items per page",
+    "ViewDetailOfAccount":"View detail of account",
+    "AccountValue":"Account Value: ",
+    "AccountType":"Account type: ",
+    "CreateNewAccount":"Create New Account",
+    "AccountName":"Account Name",
+    "CreateAccount": "Create Account"
 
     
 

@@ -37,7 +37,6 @@ export class MainComponent implements OnInit {
 
   @Input()
   numbersOfAccount: number;
-
   USDTRY: number;
   EURTRY: number;
   XAUTRY: number;

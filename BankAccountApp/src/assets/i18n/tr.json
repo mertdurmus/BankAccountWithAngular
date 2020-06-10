@@ -35,5 +35,18 @@
     "AllTransfers":"Tüm Geçmiş İşlemler",
     "Create":"Yeni Hesap Aç",
     "MyAccounts":"Hesaplarım",
-    "RecentEvents":"Geçmiş işlemlerim"
+    "RecentEvents":"Geçmiş işlemlerim",
+    "SearchDate":"Tarih Ara",
+    "SearchCurrency":"Para Birimi Ara",
+    "SearchAmount":"Miktar Ara",
+    "SearchDescription":"Açıklama Ara",
+    "PerPage2":"Her sayfada 2 madde",
+    "PerPage5":"Her sayfada 5 madde",
+    "PerPage10":"Her sayfada 10 madde",
+    "ViewDetailOfAccount":"Hesap detayını gör",
+    "AccountValue":"Hesap bakiyesi: ",
+    "AccountType":"Hesabın cinsi",
+    "CreateNewAccount":"Hesap Aç",
+    "AccountName":"Hesap Adı",
+    "CreateAccount": "Hesabı Oluştur"
 }

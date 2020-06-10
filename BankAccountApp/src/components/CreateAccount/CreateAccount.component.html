@@ -4,12 +4,12 @@
       <div class="col-md-6 offset-md-3">
         <form [formGroup]="accountForm" >
           <div class="form-group">
-            <label>Account name</label>
+            <label>{{'AccountName' | translate }}</label>
             <input type="text" formControlName="name" class="form-control" />
           </div>
           <div class="alert alert-danger" *ngIf="accountForm.get('name').hasError('required') && accountForm.get('name').dirty">Name is required</div>
           <div *ngIf="!firstAccountCheck" class="form-group">
-            <label>Amount</label>
+            <label>{{'Amount' | translate }}</label>
             <input type="text" formControlName="amount" class="form-control" />
           </div>
           <div class="alert alert-danger" *ngIf="accountForm.get('amount').hasError('required') && accountForm.get('amount').dirty">Amount is required</div>
@@ -21,13 +21,13 @@
               [ngModelOptions]="{ standalone: true }"
             >
               <option *ngFor="let account of accounts" [value]="account.accountId">
-                account name->>> {{ account.name }}: amount->>>>
+                account name->>> {{ account.name }}: {{'Amount' | translate }}->>>>
                 {{ account.amount }}
               </option>
             </select>
           </div>
           <div *ngIf="firstAccountCheck" class="form-group">
-            <label>Amount</label>
+            <label>{{'Amount' | translate }}</label>
             <input
               type="text"
               formControlName="amount"
@@ -37,7 +37,7 @@
             <small>amount cannot be changed at the first account opening</small>
           </div>
           <div class="form-group">
-            <label>Currecy type</label>
+            <label>{{'Currency' | translate }}</label>
             <select formControlName="currency" class="form-control">
               <option  value="USD">dolar</option>
               <option  value="EUR">euro</option>
@@ -48,7 +48,7 @@
           <div class="alert alert-danger" *ngIf="accountForm.get('currency').hasError('required') && accountForm.get('currency').dirty">currency is required</div>
           <div *ngIf="!firstAccountCheck" class="form-group">
             <button [disabled]="!accountForm.valid" (click)=onSubmit() class="btn btn-primary">
-              Create Account
+              {{'CreateAccount' | translate }}
             </button>
           </div>
           <div *ngIf="firstAccountCheck" class="form-group">
