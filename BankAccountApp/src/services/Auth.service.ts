@@ -20,15 +20,17 @@ export class AuthService {
 
   constructor(private alertifyService: AlertifyService,
               private router: Router, ) {
-    this.createDatabase();
+                // database initialize
+                this.createDatabase();
   }
 
-
+  // create account database
   private createDatabase() {
     this.db = new Dexie('MyAppDatabase');
     this.db.version(1).stores({ users: '++id, firstName, lastName, userName, password, confirmPassword' });
   }
 
+  // Kullanıcıyı kayıt eden fonksiyon
   addToIndexedDb(user: User) {
     this.db.users
       .add(user)
@@ -43,7 +45,7 @@ export class AuthService {
       });
   }
 
-
+  // login fonksiyonu, username ve passwordden oluşan LoginUser nesnesini parametre olarak alır.
   async login(loginUser: LoginUser) {
     const user = await this.db.users.where('userName').equals(loginUser.userName).toArray();
     console.log(user[0]);
@@ -53,7 +55,6 @@ export class AuthService {
         this.alertifyService.success('Succecfully Login');
         this.router.navigateByUrl('/account');
         setTimeout(() => { window.location.reload(); }, 100);
-       
       } else {
         this.alertifyService.warning('password incorrect');
       }
@@ -62,43 +63,34 @@ export class AuthService {
     }
   }
 
-  isUserLoggedIn() {
-
+  // kullanıcının oturumunu kontrol eden fonksiyon
+  isUserLoggedIn(): boolean {
     const user = localStorage.getItem(AUTHENTICATED_USER);
     return !(user === null);
   }
 
+  // oturumundan çıkış yaptığımız fonksiyon, localStoragedaki oturum bilgilerini temizliyoruz.
   logOut() {
     localStorage.removeItem(AUTHENTICATED_USER);
     localStorage.removeItem(AUTHENTICATED_USER_ID);
-    this.alertifyService.error('Sistemden çıkış yapıldı');
+    this.alertifyService.error('user succesfully log out');
   }
 
-
+  // localStorage'a kullanıcının kullanıcı id'sini kayıt eden fonksiyon
   async setCurrentUserId() {
     const user = localStorage.getItem(AUTHENTICATED_USER);
     const userDb = await this.db.users.where('userName').equals(user).toArray();
     localStorage.setItem(AUTHENTICATED_USER_ID, userDb[0].id);
-
   }
 
-async getUserNames(): Promise<string>{
-  const user = localStorage.getItem(AUTHENTICATED_USER);
-  const userDb = await this.db.users.where('userName').equals(user).toArray();
-  const firstName = userDb[0].firstName;
-  const lastName = userDb[0].lastName;
-  return firstName + ' ' + lastName;
-
-}
-
-  private async sendItemsFromIndexedDb() {
-    const allItems: User[] = await this.db.todos.toArray();
-    allItems.forEach((item: User) => {
-      // send items to backend...
-      this.db.users.delete(item.id).then(() => {
-        console.log(`item ${item.id} sent and deleted locally`);
-      });
-    });
+  // main page için kullanıcı adını döndüren fonksiyon
+  async getUserNames(): Promise<string>{
+    const user = localStorage.getItem(AUTHENTICATED_USER);
+    const userDb = await this.db.users.where('userName').equals(user).toArray();
+    const firstName = userDb[0].firstName;
+    const lastName = userDb[0].lastName;
+    return firstName + ' ' + lastName;
   }
+
 
 }

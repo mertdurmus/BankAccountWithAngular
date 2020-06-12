@@ -14,7 +14,7 @@ import { AlertifyService } from 'src/services/Alertify.service';
 export class TransfersComponent implements OnInit {
 
   constructor(private accountService: AccountService, private alertifyService: AlertifyService) { }
-// , private filterTablePipe: FilterTablePipe
+
   transaction: Transaction[];
   filterText = '';
   amountText: number;
@@ -36,7 +36,6 @@ export class TransfersComponent implements OnInit {
       }else{
         this.alertifyService.warning('there is no transaction');
       }
-      
     });
   }
 

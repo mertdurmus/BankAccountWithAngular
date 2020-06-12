@@ -35,14 +35,18 @@ export class MainComponent implements OnInit {
 
   isUserLogged = false;
 
+  // initialize numbersOfAccount behavioralSubject
   @Input()
   numbersOfAccount: number;
+
   USDTRY: number;
   EURTRY: number;
   XAUTRY: number;
   title = ' Bank Account App';
   username;
 
+
+  // translate select function
   switchLang(lang: string) {
     this.translate.use(lang);
   }
@@ -52,10 +56,12 @@ export class MainComponent implements OnInit {
     this.isUserLoggedIn();
     this.router.navigateByUrl('/login');
   }
+
   login() {
     this.router.navigateByUrl('/login');
     this.isUserLoggedIn();
   }
+
   getUserName(){
     this.authService.getUserNames().then(value => {
       if (value !== null){
@@ -82,18 +88,17 @@ export class MainComponent implements OnInit {
         next: (v) => this.numbersOfAccount = v
       }
     );
-    console.log(this.numbersOfAccount);
     this.currencyService.refresh();
     this.getUserName();
   }
 
   refresh() {
-
     this.USDTRY = this.currencyService.getUsdTry();
     this.EURTRY = this.currencyService.getEurTry();
     this.XAUTRY = this.currencyService.getXauTry();
   }
 
+  // refresh function for account number
   refreh() {
     this.accountService.accntNumber.subscribe(
       {

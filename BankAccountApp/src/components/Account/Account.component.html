@@ -32,6 +32,16 @@
               >
             </p>
           </div>
+          <br>
+          <div *ngIf="account.amount == 0" class="btn-group">
+            <button
+              (click)="deleteAccount(account.accountId)"
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+            >
+           DELETE ACCOUNT
+            </button>
+          </div>
         </div>
       </div>
     </div>

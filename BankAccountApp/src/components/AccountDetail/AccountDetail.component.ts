@@ -20,18 +20,15 @@ export class AccountDetailComponent implements OnInit {
   greenColor = 'green';
   redColor = 'red';
 
-  // filtersLoaded;
+
   constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService, private currency: CustomCurrencyPipe) { }
 
   ngOnInit() {
-    //  this.getAllAcc();
-
     this.activatedRoute.params.subscribe(params => {
       this.getAccountById(params['accountId']);
     });
-    // this.getAllReceive();
-    //  this.getAllSend();
   }
+  // detayı gösterilecek hesabı getiren fonksiyon, parametre olarak router'a eklediğimiz accountId parametresini alır
   getAccountById(accountId) {
     this.accountService.getAccountById(accountId).then(value => {
       this.account = value;
@@ -43,7 +40,7 @@ export class AccountDetailComponent implements OnInit {
       this.allAccount = value;
     });
   }
-
+  // hesabın para gönderme işlemlerini çekiyoruz
   getAllSend() {
     const accntId = this.account.accountId;
     this.accountService.getAllSend(accntId).then(value => {
@@ -51,6 +48,7 @@ export class AccountDetailComponent implements OnInit {
       console.log(this.allSend);
     });
   }
+  // hesabın para alma işlemlerini çekiyoruz
   getAllReceive() {
     const accntId = this.account.accountId;
     this.accountService.getAllReceive(accntId).then(value => {
@@ -58,9 +56,10 @@ export class AccountDetailComponent implements OnInit {
       console.log(this.allReceive);
     });
   }
-
+  // işlem detaylarını gösteren fonksiyon
   showTransaction() {
     this.getAllSend();
     this.getAllReceive();
   }
+
 }

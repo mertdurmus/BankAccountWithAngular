@@ -8,7 +8,6 @@ import { Transaction } from 'src/models/transaction';
 import { CurrencyService } from './Currency.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TransferState } from '@angular/platform-browser';
-
 export const accountNumber = 'accountNumber';
 
 
@@ -36,7 +35,7 @@ export class AccountService {
   accntNumber = new BehaviorSubject<number>(0);
 
 
-
+  // creating accounts databases with dexie
   private createDatabase() {
     this.db = new Dexie('MyBankDatabase');
     this.db.version(1).stores({ accounts: '++accountId, name, amount, currency, userId' });
@@ -47,8 +46,8 @@ export class AccountService {
   }
 
 
-
- async addAccount(account: Account) {
+  // adding account in db
+  async addAccount(account: Account) {
     this.db.accounts
       .add(account)
       .then(async () => {
@@ -59,9 +58,9 @@ export class AccountService {
         console.log('Error: ' + (e.stack || e));
         this.alertifyService.error('Err! account not created please try again');
       });
-      // account amount convert nmuber type
+    // account amount convert number type(default string but we need number)
     const thisAccount: Account = await this.db.accounts.get({ accountId: account.accountId });
-    const amountNumberType = thisAccount.amount - 0 ;
+    const amountNumberType = thisAccount.amount - 0;
     this.db.accounts.update(thisAccount, { amount: amountNumberType }).then(updated => {
       if (updated) {
         console.log('success');
@@ -69,18 +68,19 @@ export class AccountService {
         console.log('err!');
       }
     });
-
   }
 
-   async updateAccountNumber(){
+  // we create updateAccountNumber function, we need showing account number to main page
+  async updateAccountNumber() {
     const userId = localStorage.getItem(AUTHENTICATED_USER_ID);
     const allItems: Account[] = await this.db.accounts.where('userId').equals(userId).toArray();
     this.accntNumber.next(allItems.length);
     setTimeout(() => { localStorage.setItem(accountNumber, allItems.length.toString()); }, 25);
   }
 
-  async setTransaction(transaction: Transaction) {
 
+  // this is transaction create and add transaction to db function
+  async setTransaction(transaction: Transaction) {
     const sender = transaction.senderId;
     const receiver = transaction.receiverId;
     const transId = transaction.transactionId;
@@ -92,17 +92,18 @@ export class AccountService {
     let receiverAmount = receiverAccount.amount;
     const receiverCurrency = receiverAccount.currency;
     const curr = this.currencyService.convert(receiverCurrency, senderCurrency, 1);
-    if (senderCurrency === 'XAU'){
-      receiverAmount = receiverAmount + (value / (curr * 33.1 ));
-    }
-    if (receiverCurrency === 'XAU'){
-      receiverAmount = receiverAmount + (value / (curr / 33.1 ));
-    }
-    else{
+    // we convert xau gold to gr gold
+    if (senderCurrency === 'XAU') {
+      receiverAmount = receiverAmount + (value / (curr * 33.1));
+      senderAmount = senderAmount - (value);
+    } else if (receiverCurrency === 'XAU') {
+      receiverAmount = receiverAmount + (value / (curr / 33.1));
+      senderAmount = senderAmount - (value);
+    } else{
       receiverAmount = receiverAmount + (value / curr);
+      senderAmount = senderAmount - (value);
     }
-    senderAmount = senderAmount - (value);
-
+    // we save transaction
     this.db.transactions
       .add(transaction)
       .then(() => {
@@ -112,7 +113,8 @@ export class AccountService {
         console.log('Error: ' + (e.stack || e));
         this.alertifyService.error('Err! does not send please try again');
       });
-
+      // we update accounts final balance(Önce transfer değerini kayıt ediyoruz. sonrasında bu değere göre hesapları güncelliyoruz)
+      // hesapta yeterli bakiye var mı kontrolünü transaction componentin içinde yapıyoruz, kontrol için servisten veri çekmiyoruz
     this.db.accounts.update(sender, { amount: senderAmount }).then(updated => {
       if (updated) {
         console.log('success');
@@ -131,12 +133,13 @@ export class AccountService {
   }
 
 
+  // bu fonksiyon da da transaction kayıtlarına gönderen ve alan hesapların son bakiye değerlerini ekliyoruz
+  // daha sonrasında bu değeri final balance olarak account detail component içinde gösteriyoruz.
   async getUpdatedAccountAmount(senderId: number, receiverId: number, transctionId: string) {
     const senderAccount: Account = await this.db.accounts.get({ accountId: senderId });
     const senderAmount = senderAccount.amount;
     const receiverAccount: Account = await this.db.accounts.get({ accountId: receiverId });
     const receiverAmount = receiverAccount.amount;
-    // const transaction: Transaction = await this.db.transactions.get({transactionId: transctionId});
     this.db.transactions.update(transctionId, { senderLastValue: senderAmount, receiverLastValue: receiverAmount }).then(updated => {
       if (updated) {
         console.log(' transaction successfully updated');
@@ -146,13 +149,13 @@ export class AccountService {
     });
 
   }
-
+  // kullanıcının son işlemlerini döndüren fonksiyon
   async getLastEvent(): Promise<Transaction[]> {
     const userId = localStorage.getItem(AUTHENTICATED_USER);
     // tslint:disable-next-line:max-line-length
     const allItems: Transaction[] = await this.db.transactions.where('userId').equals(userId).reverse().sortBy('actionDate').catch(
       err => {
-      console.error(err.stack || err);
+        console.error(err.stack || err);
       });
 
     if (allItems[0]) {
@@ -202,7 +205,8 @@ export class AccountService {
   }
 
 
-
+  // kullanıcı yeni bir hesap açıyor ise bu hesabı açarken yalnızca sender account güncelleniyor.
+  // bu nedenle ayrı bir fonksiyon ile kontrol ediyoruz.
   async setTransactionFirst(transaction: Transaction) {
     const sender = transaction.senderId;
     const receiver = transaction.receiverId;
@@ -213,15 +217,13 @@ export class AccountService {
     const receiverAccount: Account = await this.db.accounts.get({ accountId: receiver });
     let receiverAmount = receiverAccount.amount;
     const receiverCurrency = receiverAccount.currency;
-    if(receiverCurrency === 'XAU'){
+    if (receiverCurrency === 'XAU') {
       receiverAmount = receiverAmount + value;
       senderAmount = senderAmount - (value / 33.1);
-    }else{
+    } else {
       receiverAmount = receiverAmount + value;
       senderAmount = senderAmount - value;
     }
-
-
     this.db.transactions
       .add(transaction)
       .then(() => {
@@ -240,6 +242,11 @@ export class AccountService {
       }
     });
     this.getUpdatedAccountAmount(sender, receiver, transId);
+  }
+
+
+  deleteAccount(id: string){
+    this.db.accounts.delete(id);
   }
 }
 

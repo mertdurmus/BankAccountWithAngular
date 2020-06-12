@@ -39,6 +39,8 @@ export class CreateAccountModalComponent implements OnInit {
               private alertifyService: AlertifyService,
               public activeModal: NgbActiveModal) { }
 
+
+
   ngOnInit() {
     this.userId = localStorage.getItem(AUTHENTICATED_USER);
     this.accountService.getAllAccount().then(value => {
@@ -56,6 +58,8 @@ export class CreateAccountModalComponent implements OnInit {
     this.getAccounts();
   }
 
+
+  // initialize create form
   createForm() {
     this.accountForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -64,30 +68,31 @@ export class CreateAccountModalComponent implements OnInit {
     });
   }
 
+  // ikinci ve üzeri hesap açılışlarında çalışan fonksiyon
   onSubmit() {
     let amountCheck;
     this.account = Object.assign({}, this.accountForm.value);
     if (this.senderAccountId){
-    for(const a of this.accounts){
-      if(a.accountId === this.senderAccountId){
-        amountCheck = a.amount;
+      for (const a of this.accounts){
+        if (a.accountId === this.senderAccountId){
+          amountCheck = a.amount;
+        }
       }
-    }
-    if (amountCheck >= this.account.amount){
-      this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
-      this.account.userId = this.id;
-      this.account.accountId = uuidv4();
-      this.accountService.addAccount(this.account);
-      this.transformation();
-    }else{
-      this.alertifyService.warning('not enough money on sender account');
-    }
+      if (amountCheck >= this.account.amount){
+        this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
+        this.account.userId = this.id;
+        this.account.accountId = uuidv4();
+        this.accountService.addAccount(this.account);
+        this.transformation();
+      }else{
+        this.alertifyService.warning('not enough money on sender account');
+      }
     }else{
       this.alertifyService.error('you dont select sender account');
     }
   }
 
-
+  // ilk hesap açarken çalışan fonksiyon
   onSubmitFirst() {
     this.account = Object.assign({}, this.accountForm.value);
     this.id = localStorage.getItem(AUTHENTICATED_USER_ID);
@@ -101,6 +106,8 @@ export class CreateAccountModalComponent implements OnInit {
       this.accounts = value;
     });
   }
+
+  // kur dönüşümlerini currency servisi kullanarak yaptığımız fonksiyon
   transformation(){
    const senderAccount = this.accounts.filter(x => x.accountId === this.senderAccountId)[0];
    this.senderAccount = senderAccount;
@@ -113,7 +120,7 @@ export class CreateAccountModalComponent implements OnInit {
    this.saveTransaction();
 
   }
-
+  // transaction işleminin nesnesini oluşturan ve veritabanına gönderen fonksiyon
   saveTransaction(){
     this.transaction.transactionId = uuidv4();
     this.transaction.actionDate = new Date();
@@ -126,7 +133,6 @@ export class CreateAccountModalComponent implements OnInit {
     this.transaction.userId = this.userId;
     this.accountService.setTransactionFirst(this.transaction);
     window.location.reload();
-   // setTimeout(() => { this.router.navigateByUrl('account'); } , 1000);
   }
 
 

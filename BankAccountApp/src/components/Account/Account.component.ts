@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
   transaction: Transaction[];
   transactionLastTen: Transaction[];
 
+
   constructor(private router: Router,
               private authService: AuthService,
               private accountService: AccountService,
@@ -28,13 +29,14 @@ export class AccountComponent implements OnInit {
     this.getAccounts();
     this.getLastEvent();
     this.authService.setCurrentUserId();
-
   }
+
 
   createAccount() {
     this.router.navigateByUrl('/createAccount');
   }
 
+  // get all account to showing
   getAccounts(){
       this.accountService.getAllAccount().then(value => {
         if (value !== null){
@@ -43,6 +45,7 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  // get all last events, transactions
   getLastEvent(){
     this.accountService.getLastEvent().then(value => {
       this.transaction = value;
@@ -52,11 +55,16 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  // select last 10 events
   assign(){
     this.transactionLastTen = this.transaction.slice(0, 10);
   }
-
+  // opening create account with modal form
   open() {
     const modalRef = this.modalService.open(CreateAccountModalComponent);
+  }
+
+  deleteAccount(id: string){
+    this.accountService.deleteAccount(id);
   }
 }

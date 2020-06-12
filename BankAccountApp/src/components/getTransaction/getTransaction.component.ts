@@ -13,7 +13,7 @@ import { AlertifyService } from 'src/services/Alertify.service';
   selector: 'app-getTransaction',
   templateUrl: './getTransaction.component.html',
   styleUrls: ['./getTransaction.component.css'],
-  providers: [AccountService]
+  providers: [AccountService] // AccountService is a local service
 })
 export class GetTransactionComponent implements OnInit {
   senderAccountId: number;
@@ -33,7 +33,7 @@ export class GetTransactionComponent implements OnInit {
               private formBuilder: FormBuilder,
               private currencyService: CurrencyService,
               private alertifyService: AlertifyService) { }
-
+    // CurrencyService, AlertifyService is a global service
 
 
   ngOnInit() {
@@ -50,17 +50,13 @@ export class GetTransactionComponent implements OnInit {
     this.getAccounts();
     this.createForm();
     this.currencyService.refresh();
-
   }
-
-
 
 
   setVirman(virman){
     this.choose = true;
     this.virman = true;
   }
-
 
 
   getAccountIdById(accountId){
@@ -76,7 +72,6 @@ export class GetTransactionComponent implements OnInit {
   }
 
 
-
   createForm() {
     this.transactionForm = this.formBuilder.group({
       receiverId: ['', Validators.required],
@@ -85,11 +80,10 @@ export class GetTransactionComponent implements OnInit {
     });
   }
 
-
-
+  // farklı kullanıcılara veya hesap numarası girerek transfer yaptığımız fonksiyon
   onSubmit(){
     this.transaction = Object.assign({}, this.transactionForm.value);
-    if (this.account.amount > this.transaction.amount){
+    if (this.account.amount >= this.transaction.amount){
       this.transaction.senderId = this.senderAccountId;
       this.transaction.userId = this.userId;
       this.transaction.transactionId = uuidv4();
@@ -100,21 +94,22 @@ export class GetTransactionComponent implements OnInit {
     }else{
       this.alertifyService.warning('not enough money for sending');
     }
-   
   }
 
-
-
+  // virman yapabildiğimiz fonksiyon
   onSubmitVirman(){
     this.transaction = Object.assign({}, this.transactionForm.value);
     this.accountService.getAccountById(this.senderAccountId).then(value => {
       this.account = value;
     });
+    // burada timeout kullanıyoruz çünkü getAccountById fonksiyonu asenkron çalışıyor, return değeri bekliyoruz.
     setTimeout(() => {this.init(); }, 1000);
 
   }
+
+  // transfer initialize fonksiyon
   init(){
-    if (this.account.amount > this.transaction.amount){
+    if (this.account.amount >= this.transaction.amount){
       this.transaction.senderId = this.senderAccountId;
       this.transaction.receiverId = this.receiverId;
       this.transaction.transactionId = uuidv4();
@@ -141,11 +136,9 @@ export class GetTransactionComponent implements OnInit {
     });
   }
 
+
   list(){
     this.showList = true;
   }
-
-
-
 
 }
