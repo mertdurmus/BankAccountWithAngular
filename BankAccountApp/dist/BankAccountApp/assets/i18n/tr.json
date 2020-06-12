@@ -48,5 +48,11 @@
     "AccountType":"Hesabın cinsi",
     "CreateNewAccount":"Hesap Aç",
     "AccountName":"Hesap Adı",
-    "CreateAccount": "Hesabı Oluştur"
+    "CreateAccount": "Hesabı Oluştur",
+    "PleaseChooseYourAction":"İşleminizi seçiniz",
+    "transferToAnotherAccount":"Farklı bir hesaba para gönderme",
+    "selectTheAccountToBeTransferred":"Hangi hesabınızdan para göndermek istersiniz",
+    "AccountToWhichTheMoneyWillBeTransferred":"Hangi hesabınızdan virman yapmak istersiniz",
+    "ReceiverAccountNumber":"Alıcı hesap numarası",
+    "SendMoney":"Para Gönder"
 }

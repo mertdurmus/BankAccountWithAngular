@@ -89,47 +89,52 @@ export class AccountService {
     let senderAmount = senderAccount.amount;
     const senderCurrency = senderAccount.currency;
     const receiverAccount: Account = await this.db.accounts.get({ accountId: receiver });
-    let receiverAmount = receiverAccount.amount;
-    const receiverCurrency = receiverAccount.currency;
-    const curr = this.currencyService.convert(receiverCurrency, senderCurrency, 1);
-    // we convert xau gold to gr gold
-    if (senderCurrency === 'XAU') {
-      receiverAmount = receiverAmount + (value / (curr * 33.1));
-      senderAmount = senderAmount - (value);
-    } else if (receiverCurrency === 'XAU') {
-      receiverAmount = receiverAmount + (value / (curr / 33.1));
-      senderAmount = senderAmount - (value);
-    } else{
-      receiverAmount = receiverAmount + (value / curr);
-      senderAmount = senderAmount - (value);
-    }
-    // we save transaction
-    this.db.transactions
-      .add(transaction)
-      .then(() => {
-        this.alertifyService.success('transaction succesfully ');
-      })
-      .catch(e => {
-        console.log('Error: ' + (e.stack || e));
-        this.alertifyService.error('Err! does not send please try again');
+    console.log(receiverAccount);
+    if (receiverAccount !== undefined){
+      let receiverAmount = receiverAccount.amount;
+      const receiverCurrency = receiverAccount.currency;
+      const curr = this.currencyService.convert(receiverCurrency, senderCurrency, 1);
+      // we convert xau gold to gr gold
+      if (senderCurrency === 'XAU') {
+        receiverAmount = receiverAmount + (value / (curr * 33.1));
+        senderAmount = senderAmount - (value);
+      } else if (receiverCurrency === 'XAU') {
+        receiverAmount = receiverAmount + (value / (curr / 33.1));
+        senderAmount = senderAmount - (value);
+      } else{
+        receiverAmount = receiverAmount + (value / curr);
+        senderAmount = senderAmount - (value);
+      }
+      // we save transaction
+      this.db.transactions
+        .add(transaction)
+        .then(() => {
+          this.alertifyService.success('transaction succesfully ');
+        })
+        .catch(e => {
+          console.log('Error: ' + (e.stack || e));
+          this.alertifyService.error('Err! does not send please try again');
+        });
+        // we update accounts final balance(Önce transfer değerini kayıt ediyoruz. sonrasında bu değere göre hesapları güncelliyoruz)
+        // hesapta yeterli bakiye var mı kontrolünü transaction componentin içinde yapıyoruz, kontrol için servisten veri çekmiyoruz
+      this.db.accounts.update(sender, { amount: senderAmount }).then(updated => {
+        if (updated) {
+          console.log('success');
+        } else {
+          console.log('err!');
+        }
       });
-      // we update accounts final balance(Önce transfer değerini kayıt ediyoruz. sonrasında bu değere göre hesapları güncelliyoruz)
-      // hesapta yeterli bakiye var mı kontrolünü transaction componentin içinde yapıyoruz, kontrol için servisten veri çekmiyoruz
-    this.db.accounts.update(sender, { amount: senderAmount }).then(updated => {
-      if (updated) {
-        console.log('success');
-      } else {
-        console.log('err!');
-      }
-    });
-    this.db.accounts.update(receiver, { amount: receiverAmount }).then(updated2 => {
-      if (updated2) {
-        console.log('success');
-      } else {
-        console.log('err!');
-      }
-    });
-    this.getUpdatedAccountAmount(sender, receiver, transId);
+      this.db.accounts.update(receiver, { amount: receiverAmount }).then(updated2 => {
+        if (updated2) {
+          console.log('success');
+        } else {
+          console.log('err!');
+        }
+      });
+      this.getUpdatedAccountAmount(sender, receiver, transId);
+    }else{
+      this.alertifyService.error('there is no receiver account ');
+    }
   }
 
 
@@ -220,6 +225,7 @@ export class AccountService {
     if (receiverCurrency === 'XAU') {
       receiverAmount = receiverAmount + value;
       senderAmount = senderAmount - (value / 33.1);
+      transaction.amount = value / 33.1;
     } else {
       receiverAmount = receiverAmount + value;
       senderAmount = senderAmount - value;

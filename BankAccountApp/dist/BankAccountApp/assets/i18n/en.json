@@ -48,7 +48,13 @@
     "AccountType":"Account type: ",
     "CreateNewAccount":"Create New Account",
     "AccountName":"Account Name",
-    "CreateAccount": "Create Account"
+    "CreateAccount": "Create Account",
+    "PleaseChooseYourAction":"Please choose your action",
+    "transferToAnotherAccount":"transfer to another account",
+    "selectTheAccountToBeTransferred":"select the account to be transferred",
+    "AccountToWhichTheMoneyWillBeTransferred":"Account to which the money will be transferred",
+    "ReceiverAccountNumber":"Receiver account number",
+    "SendMoney":"Send Money"
 
     
 

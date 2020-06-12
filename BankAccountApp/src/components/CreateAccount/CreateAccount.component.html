@@ -22,7 +22,7 @@
             >
               <option *ngFor="let account of accounts" [value]="account.accountId">
                 account name->>> {{ account.name }}: {{'Amount' | translate }}->>>>
-                {{ account.amount }}
+                {{ account.amount | currency:account.currency }}
               </option>
             </select>
           </div>

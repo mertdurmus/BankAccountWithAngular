@@ -119,7 +119,7 @@ export class GetTransactionComponent implements OnInit {
       this.transaction.currency = this.account.currency;
       this.accountService.setTransaction(this.transaction);
     }else{
-      this.alertifyService.warning('not enough money for sending');
+      this.alertifyService.warning('not enough money for sending, Remember that the amount you send is multiplied by the account currency rate ');
     }
 
   }
